@@ -25,12 +25,12 @@ resource "aws_dynamodb_table" "k8s-terraform_locks" {
   }
 }
 
-# terraform {
-#   backend "s3" {
-#     bucket         = "k8s-terraform-bucket"
-#     key            = "global/s3/terraform.tfstate"
-#     region         = "us-west-1"
-#     dynamodb_table = "k8s-terraform-bucket-locks"
-#     encrypt        = true
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket         = "k8s-terraform-bucket"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-west-1"
+    dynamodb_table = "k8s-terraform-bucket-locks"
+    encrypt        = true
+  }
+}
