@@ -5,10 +5,13 @@ module "network" {
   source                         = "./modules/network"
   region                         = var.region
   vpc_cidr                       = var.vpc_cidr
+  subnet_cidr                    = var.subnet_cidr
+  all_routes                     = var.all_routes
   enable_dns_support             = var.enable_dns_support
   enable_dns_hostnames           = var.enable_dns_hostnames
   enable_classiclink             = var.enable_classiclink
   enable_classiclink_dns_support = var.enable_classiclink_dns_support
+  resource_tag                   = var.resource_tag
 #   max_subnets                    = 10
 #   public_subnet_count            = 2
 #   private_subnet_count           = 4
