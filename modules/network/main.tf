@@ -15,3 +15,19 @@ resource "aws_vpc" "k8s-terraform" {
     Name = "k8s-cluster-from-ground-up"
   }
 }
+
+# create dhcp options
+resource "aws_vpc_dhcp_options" "k8s-dhcp-option" {
+  # domain_name          = k8s.internal
+  domain_name_servers  = ["AmazonProvidedDNS"]
+
+  tags = {
+    Name = "k8s-cluster-from-ground-up"
+  }
+}
+
+# associate dhcp options
+resource "aws_vpc_dhcp_options_association" "k8s-dns_resolver" {
+  vpc_id          = aws_vpc.k8s-terraform.id
+  dhcp_options_id = aws_vpc_dhcp_options.k8s-dhcp-option.id
+}
