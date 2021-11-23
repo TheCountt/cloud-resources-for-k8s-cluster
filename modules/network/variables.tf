@@ -12,6 +12,6 @@ variable "enable_classiclink_dns_support" {}
 
 variable "subnet_cidr" {}
 
-variable "all_routes" {}
+variable "all_ips" {}
 
 variable "resource_tag" {}

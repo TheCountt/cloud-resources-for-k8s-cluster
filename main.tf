@@ -6,7 +6,7 @@ module "network" {
   region                         = var.region
   vpc_cidr                       = var.vpc_cidr
   subnet_cidr                    = var.subnet_cidr
-  all_routes                     = var.all_routes
+  all_ips                        = var.all_ips
   enable_dns_support             = var.enable_dns_support
   enable_dns_hostnames           = var.enable_dns_hostnames
   enable_classiclink             = var.enable_classiclink
@@ -18,4 +18,10 @@ module "network" {
 #   private_subnets                = [for i in range(1, 8, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
 #   public_subnets                 = [for i in range(2, 5, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
 #   security_groups                = local.security_groups
+}
+
+module "NLB" {
+  source            = "./modules/NLB"
+  vpc_id            = module.network.vpc_id
+  subnet            = module.network.k8s-subnet
 }
