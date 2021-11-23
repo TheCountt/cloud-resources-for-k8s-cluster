@@ -32,7 +32,7 @@ resource "aws_lb_target_group" "k8s-tg" {
 # Register Target IPs
 resource "aws_lb_target_group_attachment" "k8s-lb-tg" {
   target_group_arn = aws_lb_target_group.k8s-tg.arn
-  target_id        = [172.31.0.1{0,1,2}]
+  target_id        = ["172.31.0.10", "172.31.0.11", "172.31.0.12"]
   port             = 6443
 }
 
