@@ -29,3 +29,18 @@ module "NLB" {
   target_id                      = "${element(var.ip_list, count.index)}"
   resource_tag                   = var.resource_tag
 }
+
+# The Module creates instances for various servers
+module "compute" {
+  source          = "./modules/compute"
+  region          = var.region
+  subnet          = module.network.subnets
+  count           = 3
+  instance_type   = var.instance_type
+  ami             = var.ami
+  k8s-sg          = module.network.security-group
+  # authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
+  private_ip      = module.NLB.target_id
+  resource_tag    = var.resource_tag
+  
+}

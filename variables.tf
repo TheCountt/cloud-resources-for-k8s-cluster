@@ -24,3 +24,7 @@ variable "ip_list" {
 variable "target_id" {
     default = ["ip_list"]
 }
+
+variable "instance_type" {}
+
+variable "ami" {}

@@ -7,3 +7,9 @@ output "subnets" {
   value       = aws_subnet.k8s-subnet.id
   description = "The public subnet"
 }
+
+#output for security group
+output "security-group" {
+  value = aws_security_group.k8s-sg.id
+  description = "k8s security-group"
+}
