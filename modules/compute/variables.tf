@@ -12,6 +12,4 @@ variable "private_ip" {}
 
 variable "resource_tag" {}
 
-variable "tag" {
-  
-}
+variable "tags" {}
