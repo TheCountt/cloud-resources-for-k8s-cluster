@@ -10,6 +10,8 @@ variable "k8s-sg" {}
 
 variable "private_ip" {}
 
-variable "resource_tag" {}
+# variable "resource_tag" {}
 
 variable "tags" {}
+
+variable "key_name" {}

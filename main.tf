@@ -26,7 +26,7 @@ module "NLB" {
 
 module "key-pair" {
   source                         = "./modules/key-pair"
-  # key_name   = "name of key"
+  # key_name   = "name-of-key"
   # public_key = tls_private_key.this.public_key_openssh
   resource_tag                   = var.resource_tag
 
@@ -34,20 +34,20 @@ module "key-pair" {
 
 
 # The Module creates instances 
-# module "compute" {
-#   source          = "./modules/compute-master"
-#   region          = var.region
-#   subnet          = module.network.subnets
-#   count           = 3
-#   instance_type   = var.instance_type
-#   ami             = var.ami
-#   k8s-sg          = module.network.security-group
-#   # authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
-#   private_ip      = "${element(var.ip_list, count.index)}"
-#   resource_tag    = var.resource_tag
-#   key_name        = module.key-pair.public-key
-#   tags = {
-#         Name = "k8s-cluster-from-ground-up-master-${count.index}"
-#     } 
+module "compute" {
+  source          = "./modules/compute"
+  region          = var.region
+  subnet          = module.network.subnets
+  count           = 3
+  instance_type   = var.instance_type
+  ami             = var.ami
+  k8s-sg          = module.network.security-group
+  # authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
+  private_ip      = "${element(var.ip_list, count.index)}"
+  # resource_tag    = var.resource_tag
+  key_name        = module.key-pair.public-key
+  tags = {
+        Name = "k8s-cluster-from-ground-up-master-${count.index}"
+    } 
   
-# }
+}

@@ -6,7 +6,8 @@ resource "aws_instance" "k8s-master" {
   source_dest_check            = false
   vpc_security_group_ids      = [var.k8s-sg]
   private_ip                  = var.private_ip
-  key_name                    = aws_key_pair.k8s-ssh_key.key_name
+  # key_name                    = aws_key_pair.k8s-ssh_key.key_name
+  key_name = var.key_name
 
   tags = var.tags
 
