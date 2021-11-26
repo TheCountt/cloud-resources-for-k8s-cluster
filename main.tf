@@ -21,7 +21,11 @@ module "network" {
 }
 
 module "NLB" {
-  source            = "./modules/NLB"
-  vpc_id            = module.network.vpc_id
-  subnet            = module.network.k8s-subnet
+  source                         = "./modules/NLB"
+  vpc_id                         = module.network.vpc_id
+  subnet                         = module.network.subnets
+  count                          = 3
+  ip_list                        = var.ip_list
+  target_id                      = "${element(var.ip_list, count.index)}"
+  resource_tag                   = var.resource_tag
 }

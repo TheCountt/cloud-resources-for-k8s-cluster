@@ -16,3 +16,11 @@ variable "enable_classiclink_dns_support" {}
 
 variable "resource_tag" {}
 
+variable "ip_list" {
+  description = "targeted ip addresses"
+  type = list
+}
+
+variable "target_id" {
+    default = ["ip_list"]
+}

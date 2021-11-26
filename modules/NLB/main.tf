@@ -4,8 +4,7 @@ resource "aws_lb" "k8s-external-nlb" {
   load_balancer_type = "network"
   internal = false
 #   security_groups = [aws_security_group.k8s-sg.id]
-  subnets = [aws_subnet.k8s-subnet.id]
-
+  subnets = [var.subnet]
   tags = {
     Name = var.resource_tag
   }
@@ -13,26 +12,28 @@ resource "aws_lb" "k8s-external-nlb" {
 
 # Create a Target Group
 resource "aws_lb_target_group" "k8s-tg" {
-#   health_check {
-#     interval            = 10
-#     path                = "/"
-#     protocol            = "HTTP"
-#     timeout             = 5
-#     healthy_threshold   = 5
-#     unhealthy_threshold = 2
-#   }
+  # health_check {
+  #   interval            = 10
+  #   path                = "/"
+  #   protocol            = "TCP"
+  #   timeout             = 5
+  #   healthy_threshold   = 5
+  #   unhealthy_threshold = 2
+  # }
 
   name        = "k8s-tg"
   port        = 6443
   protocol    = "TCP"
   target_type = "ip"
-  vpc_id      = aws_vpc.k8s-vpc.id
+  vpc_id      = var.vpc_id
 }
+
+
 
 # Register Target IPs
 resource "aws_lb_target_group_attachment" "k8s-lb-tg" {
   target_group_arn = aws_lb_target_group.k8s-tg.arn
-  target_id        = ["172.31.0.10", "172.31.0.11", "172.31.0.12"]
+  target_id        = var.target_id
   port             = 6443
 }
 
