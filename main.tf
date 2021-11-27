@@ -42,12 +42,9 @@ module "compute" {
   instance_type   = var.instance_type
   ami             = var.ami
   k8s-sg          = module.network.security-group
-  # authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
   private_ip      = "${element(var.ip_list, count.index)}"
-  # resource_tag    = var.resource_tag
   key_name        = module.key-pair.public-key
   tags = {
         Name = "k8s-cluster-from-ground-up-master-${count.index}"
     } 
-  
 }
