@@ -9,7 +9,7 @@ resource "aws_instance" "k8s-master" {
   # key_name                    = aws_key_pair.k8s-ssh_key.key_name
   key_name                    = var.key_name
   tags                        = var.tags
-  user_data                   = filebase64("master-node.sh")
+  user_data                   = filebase64("./modules/compute/master-node.sh")
 
 #  tags = {
 #         Name = "k8s-cluster-from-ground-up-master-${count.index}"
