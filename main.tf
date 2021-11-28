@@ -24,13 +24,13 @@ module "NLB" {
   resource_tag                   = var.resource_tag
 }
 
-module "key-pair" {
-  source                         = "./modules/key-pair"
-  # key_name   = "name-of-key"
-  # public_key = tls_private_key.this.public_key_openssh
-  resource_tag                   = var.resource_tag
+# module "key-pair" {
+#   source                         = "./modules/key-pair"
+#   # key_name   = "name-of-key"
+#   # public_key = tls_private_key.this.public_key_openssh
+#   resource_tag                   = var.resource_tag
 
-}
+# }
 
 
 # The Module creates instances 
@@ -43,7 +43,9 @@ module "compute" {
   ami             = var.ami
   k8s-sg          = module.network.security-group
   private_ip      = "${element(var.ip_list, count.index)}"
-  key_name        = module.key-pair.public-key
+  # key_name        = module.key-pair.public-key
+  key_name        = "k8s-cluster-from-ground-up"
+  resource_tag    = var.resource_tag
   tags = {
         Name = "k8s-cluster-from-ground-up-master-${count.index}"
     } 

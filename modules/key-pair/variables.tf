@@ -1,3 +1,3 @@
-variable "resource_tag" {
+# variable "resource_tag" {
   
-}
+# }
