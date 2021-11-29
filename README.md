@@ -5,5 +5,3 @@
 - run terraform script after each child module creation
 - update ansible script with values from teraform output
 - run ansible script
-
-- from Windows PC
