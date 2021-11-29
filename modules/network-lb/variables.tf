@@ -4,7 +4,7 @@ variable "vpc_id" {}
 
 variable "subnet" {}
 
-variable "ip_list" {
+variable "master_ip_list" {
   description = "targeted ip adddresses"
   type = list
 }

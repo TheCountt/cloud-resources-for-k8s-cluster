@@ -16,13 +16,18 @@ variable "enable_classiclink_dns_support" {}
 
 variable "resource_tag" {}
 
-variable "ip_list" {
+variable "master_ip_list" {
   description = "targeted ip addresses"
-  type = list
+  type        = list(any)
+}
+
+variable "worker_ip_list" {
+  description = "targeted ip addresses"
+  type        = list(any)
 }
 
 variable "target_id" {
-    default = ["ip_list"]
+  default = ["master_ip_list"]
 }
 
 variable "instance_type" {}

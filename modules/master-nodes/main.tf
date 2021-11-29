@@ -5,9 +5,16 @@ resource "aws_instance" "k8s-master" {
   source_dest_check            = false
   vpc_security_group_ids      = [var.k8s-sg]
   private_ip                  = var.private_ip
-  key_name                    = var.key_name
-  #user_data                   = filebase64("./modules/compute/master-node.sh")
+  key_name                    = "k8s-cluster-from-ground-up"
   tags                        = var.tags
+
+  connection {
+      type        = "ssh"
+      host        = self.public_ip
+      user        = var.master
+      private_key = file("/home/thecountt/k8s-cluster-from-ground-up/ssh/k8s-cluster-from-ground-up.id_rsa")
+      timeout     = "5m"
+   }
 }
 
 

@@ -14,14 +14,14 @@ module "network" {
   resource_tag                   = var.resource_tag
 }
 
-module "NLB" {
-  source                         = "./modules/NLB"
-  vpc_id                         = module.network.vpc_id
-  subnet                         = module.network.subnets
-  count                          = 3
-  ip_list                        = var.ip_list
-  target_id                      = "${element(var.ip_list, count.index)}"
-  resource_tag                   = var.resource_tag
+module "network-lb" {
+  source              = "./modules/network-lb"
+  vpc_id              = module.network.vpc_id
+  subnet              = module.network.subnets
+  count               = 3
+  master_ip_list      = var.master_ip_list
+  target_id           = element(var.master_ip_list, count.index)
+  resource_tag        = var.resource_tag
 }
 
 # module "key-pair" {
@@ -32,21 +32,44 @@ module "NLB" {
 
 # }
 
-
 # The Module creates instances 
-module "compute" {
-  source          = "./modules/compute"
-  region          = var.region
-  subnet          = module.network.subnets
-  count           = 3
-  instance_type   = var.instance_type
-  ami             = var.ami
-  k8s-sg          = module.network.security-group
-  private_ip      = "${element(var.ip_list, count.index)}"
+module "master-nodes" {
+  source        = "./modules/master-nodes"
+  region        = var.region
+  subnet        = module.network.subnets
+  count         = 3
+  instance_type = var.instance_type
+  ami           = var.ami
+  k8s-sg        = module.network.security-group
+  private_ip    = element(var.master_ip_list, count.index)
+  # key_name      = "k8s-cluster-from-ground-up"
+  # public_key    = file("~/k8s-cluster-from-ground-up/ssh/k8s-cluster-from-ground-up.id_rsa.pub")
   # key_name        = module.key-pair.public-key
-  key_name        = "k8s-cluster-from-ground-up"
-  resource_tag    = var.resource_tag
+
+  master          = "master-${count.index}"
+
   tags = {
-        Name = "k8s-cluster-from-ground-up-master-${count.index}"
-    } 
+    Name = "k8s-cluster-from-ground-up-master-${count.index}"
+  }
+}
+
+
+module "worker-nodes" {
+  source        = "./modules/worker-nodes"
+  region        = var.region
+  subnet        = module.network.subnets
+  count         = 3
+  instance_type = var.instance_type
+  ami           = var.ami
+  k8s-sg        = module.network.security-group
+  private_ip    = element(var.worker_ip_list, count.index)
+  # key_name      = "k8s-cluster-from-ground-up"
+  # public_key    = file("~/k8s-cluster-from-ground-up/ssh/k8s-cluster-from-ground-up.id_rsa.pub")
+  # key_name        = module.key-pair.public-key
+
+  worker          = "worker-${count.index}"
+
+  tags = {
+    Name = "k8s-cluster-from-ground-up-worker-${count.index}"
+  }
 }
