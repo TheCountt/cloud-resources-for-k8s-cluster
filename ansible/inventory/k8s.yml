@@ -1,0 +1,31 @@
+plugin: amazon.aws.aws_ec2
+aws_profile: automator
+
+regions:
+  - "us-west-1"
+
+strict: False
+
+keyed_groups:
+- key: tags
+  prefix: tag
+
+filters:
+  tag:Name:
+    - master-0
+    - master-1
+    - master-2
+    - worker-0
+    - worker-1
+    - worker-2
+  instance-state-name : running
+  
+hostnames:
+# a list in order of precedence for hostname variables.
+  - private-ip-address
+  - tag:Name
+  - dns-name
+  - ip-address
+
+compose:
+  ansible_host: private_ip_address
