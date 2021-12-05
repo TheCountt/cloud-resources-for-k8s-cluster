@@ -1,0 +1,5 @@
+---
+- hosts: tag_Name_worker_0, tag_Name_worker_1, tag_Name_worker_2
+  become: true
+  roles:
+     - worker

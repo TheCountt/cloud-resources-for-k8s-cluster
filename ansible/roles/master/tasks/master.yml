@@ -1,0 +1,149 @@
+---
+- name: Configuration of Controller nodes
+  hosts: tag_Name_master_0, tag_Name_master_1, tag_Name_master_2
+  user: ubuntu
+  become: yes
+  vars:
+    INTERNAL_IP: "{{ ansible_eth0.ipv4.address }}"
+    ETCD_NAME: "master-{{ ansible_eth0.ipv4.address[-1] }}"
+    NAME: "k8s-cluster-from-ground-up"
+    VPC_CIDR: "172.31.0.0/16"
+  
+  tasks:
+    - name: Create and bind cluster roles
+      ansible.builtin.shell: ./binding.sh
+      args:
+        chdir: /tmp
+    
+    - name: Download etcd
+      get_url:
+        url: https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz
+        dest: /tmp/etcd-v3.4.15-linux-amd64.tar.gz
+    
+    - name: Unarchive etcd binary file
+      unarchive:
+        src: /tmp/etcd-v3.4.15-linux-amd64.tar.gz
+        dest: /tmp
+        remote_src: yes
+
+
+    - name: Locate etcd files to copy
+      find:
+        paths: "/tmp/etcd-v3.4.15-linux-amd64/"
+        recurse: yes
+        patterns: "etcd*"
+      register: etcd_files_to_copy
+    
+    - name: Copy found items
+      copy:
+        src: "{{ item.path }}"
+        dest: /usr/local/bin/
+        remote_src: yes
+      with_items: "{{ etcd_files_to_copy.files }}"
+
+    - name: Set executable
+      ansible.builtin.file:
+        path: "{{ item }}"
+        mode: +x
+      loop:
+        - /usr/local/bin/etcd
+        - /usr/local/bin/etcdctl
+
+    - name: Create /etc/etcd
+      ansible.builtin.file:
+        path: /etc/etcd
+        state: directory
+        follow: yes
+
+    - name: Create /var/lib/etcd
+      ansible.builtin.file:
+        path: /var/lib/etcd
+        state: directory
+        mode: 0700
+        follow: yes
+
+    - name: Copy pem files
+      copy:
+        src: "/var/lib/kubernetes/{{ item }}"
+        dest: "/etc/etcd"
+        remote_src: yes
+      loop:
+        - master-kubernetes-key.pem
+        - master-kubernetes.pem
+        - ca.pem
+
+    - name: Create and write the etcd.service systemd unit file into destination directory
+      template:
+        src: ./templates/etcd.service.j2
+        dest: /etc/systemd/system/etcd.service
+
+    - name: Start etcd service
+      systemd: 
+        name: etcd
+        state: started
+        enabled: yes
+        daemon_reload: yes
+
+    - name: Download official Kubernetes release binaries
+      get_url:
+        url: "{{ item }}"
+        dest: /tmp
+      loop:
+        - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-apiserver
+        - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-controller-manager
+        - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-scheduler
+        - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl
+
+    - name: Copy kube* files into destination directory
+      copy:
+        src: "/tmp/{{ item }}"
+        dest: /usr/local/bin/
+        remote_src: yes
+      loop: 
+        - kube-apiserver
+        - kube-controller-manager
+        - kube-scheduler
+        - kubectl
+
+    
+    - name: Locate kube* files
+      find:
+        paths: "/usr/local/bin/"
+        recurse: no
+        patterns: "kube*"
+      register: kube-components
+
+
+    - name: Make kube* files executable
+      file:
+        path: "{{ item.path }}"
+        mode: +x
+      with_items: "{{ kube-components.files }}"
+
+    - name: Create /etc/kubernetes/config directory
+      ansible.builtin.file:
+        path: /etc/kubernetes/config
+        state: directory
+        follow: yes
+
+    
+    - name: Copy kube* templates
+      template:
+        src: "./master/templates/{{ item.src }}.j2"
+        dest: "{{ item.dest }}"
+      loop:
+        - {src: kube-scheduler.yaml, dest: /etc/kubernetes/config/kube-scheduler.yaml}
+        - {src: kube-controller-manager.service, dest: /etc/systemd/system/kube-controller-manager.service}
+        - {src: kube-apiserver.service, dest: /etc/systemd/system/kube-apiserver.service}
+        - {src: kube-scheduler.service, dest: /etc/systemd/system/kube-scheduler.service}
+
+    - name: Start Controller services
+      ansible.builtin.systemd: 
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+      loop:
+        - kube-apiserver
+        - kube-controller-manager
+        - kube-scheduler

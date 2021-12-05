@@ -3,7 +3,7 @@
 NAME=k8s-cluster-from-ground-up
 AWS_REGION=us-west-1
 
-mkdir ca-authority && cd ca-authority
+cd /tmp/ca-authority
 
 {
 
@@ -46,7 +46,7 @@ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 
 }
 
-########### 1. Generate the Certificate Signing Request (CSR), Private Key and the Certificate for the Kubernetes Master Nodes #######3
+########### 1. Generate the Certificate Signing Request (CSR), Private Key and the Certificate for the Kubernetes Master Nodes #######
 
 {
 cat > master-kubernetes-csr.json <<EOF
@@ -158,7 +158,7 @@ cfssl gencert \
 
 }
 
-##### 4. kube-controller-manager Client Certificate and Private Key #####3
+##### 4. kube-controller-manager Client Certificate and Private Key #####
 
 {
 cat > kube-controller-manager-csr.json <<EOF

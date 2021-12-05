@@ -1,1 +1,0 @@
-mkdir ca-authority && cd ca-authority

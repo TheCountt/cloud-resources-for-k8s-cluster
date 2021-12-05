@@ -1,0 +1,148 @@
+---
+- name: Configuration of Worker nodes
+  hosts: tag_Name_worker_0, tag_Name_worker_1, tag_Name_worker_2
+  user: ubuntu
+  become: yes
+  vars:
+    - NAME: "k8s-cluster-from-ground-up"
+    - WORKER_NAME: "worker-{{ ansible_eth0.ipv4.address[-1] }}"
+    - POD_CIDR: "172.20.{{ ansible_eth0.ipv4.address[-1] }}.0/24"
+    
+  tasks:
+    - name: Install required dependencies
+      apt:
+        name:
+          - socat
+          - conntrack
+          - ipset
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+        update_cache: yes
+
+    - name: Remove swapfile from /etc/fstab to diable swap
+      ansible.posix.mount:
+        name: "{{ item }}"
+        fstype: swap
+        state: absent
+      with_items:
+        - swap
+
+    - name: Download binaries for runc, cri-ctl, and containerd
+      get_url: 
+        url: "{{ item }}"
+        dest: /tmp
+      loop:
+        - https://github.com/opencontainers/runc/releases/download/v1.0.0-rc93/runc.amd64
+        - https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.21.0/crictl-v1.21.0-linux-amd64.tar.gz
+        - https://github.com/containerd/containerd/releases/download/v1.4.4/containerd-1.4.4-linux-amd64.tar.gz
+    
+    - name: Create containerd directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        follow: yes 
+      loop:
+        - /tmp/containerd
+        - /etc/containerd
+
+    - name: Extract downloaded binaries
+      unarchive:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        remote_src: yes
+      loop:
+        - { src: /tmp/crictl-v1.21.0-linux-amd64.tar.gz, dest: /tmp }
+        - { src: /tmp/containerd-1.4.4-linux-amd64.tar.gz, dest: /tmp/containerd }
+
+    - name: Copy runc and crictl
+      copy:
+        src: "{{ item.src }}"
+        dest: "/usr/local/bin/{{ item.dest }}"
+        mode: +x
+        remote_src: yes
+      loop:
+        - {src: /tmp/runc.amd64, dest: runc}
+        - {src: /tmp/crictl, dest: crictl}
+
+    - name: Copy containerd files
+      copy:
+        src: /tmp/containerd/bin/
+        dest: /bin
+        remote_src: yes
+
+    - name: Copy /etc/containerd/config.toml and containerd.service templates
+      template:
+        src: "{{ item.src }}.j2"
+        dest: "{{ item.dest }}"
+      loop:
+        - { src: ./worker/templates/config.toml, dest: /etc/containerd/config.toml }
+        - { src: ./worker/templates/containerd.service, dest: /etc/systemd/system/containerd.service }
+    
+    - name: Download CNI
+      get_url:
+        url: https://github.com/containernetworking/plugins/releases/download/v0.9.1/cni-plugins-linux-amd64-v0.9.1.tgz
+        dest: /tmp/cni-plugins-linux-amd64-v0.9.1.tgz
+
+    - name: Extract CNI
+      unarchive:
+        src: /tmp/cni-plugins-linux-amd64-v0.9.1.tgz
+        dest: /opt/cni/bin
+        remote_src: yes
+    
+    - name: Download binaries for kubectl, kube-proxy, and kubelet
+      get_url: 
+        url: "{{ item }}"
+        dest: /tmp
+      loop:
+        - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl
+        - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-proxy
+        - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubelet
+
+    - name: Copy kubectl, kube-proxy and kubelet
+      copy:
+        src: "/tmp/{{ item }}"
+        dest: /usr/local/bin/
+        mode: +x
+        remote_src: yes
+      loop:
+        - kubectl
+        - kube-proxy
+        - kubelet
+    
+    - name: Copy loopback configuration files
+      copy:
+        src: "./worker/templates/99-loopback.conf"
+        dest: /etc/cni/net.d/
+
+    - name: Copy bridge template
+      template:
+        src: ./worker/templates/172-20-bridge.conf.j2
+        dest: /etc/cni/net.d/172-20-bridge.conf
+
+    - name: Copy kubelet-config.yaml template
+      template:
+        src: ./worker/templates/kubelet-config.yaml.j2
+        dest: /var/lib/kubelet/kubelet-config.yaml
+
+    - name: Move kubelet and kube-proxy config files
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - {src: ./worker/templates/kubelet.service, dest: /etc/systemd/system/kubelet.service}
+        - {src: ./worker/templates/kube-proxy-config.yaml, dest: /var/lib/kube-proxy/kube-proxy-config.yaml}
+        - {src: ./worker/templates/kube-proxy.service, dest: /etc/systemd/system/kube-proxy.service}
+
+    - name: Start services
+      systemd: 
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+      loop:
+        - containerd
+        - kubelet
+        - kube-proxy

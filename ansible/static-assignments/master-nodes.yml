@@ -1,0 +1,5 @@
+---
+- hosts: tag_Name_master_0, tag_Name_master_1, tag_Name_master_2
+  become: true
+  roles:
+     - master

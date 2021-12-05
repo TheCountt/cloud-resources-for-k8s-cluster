@@ -1,0 +1,34 @@
+---
+- name: worker nodes 
+  hosts: tag_Name_worker_0, tag_Name_worker_1, tag_Name_worker_2
+  user: ubuntu
+  become: yes
+  vars:
+    - INSTANCE: "worker-{{ ansible_eth0.ipv4.address[-1] }}"
+  tasks:
+    - name: Create directories to configure kubelet, kube-proxy, cni, and a directory to keep the kubernetes root ca file
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        follow: yes 
+      loop:
+        - /var/lib/kubelet
+        - /var/lib/kube-proxy
+        - /etc/cni/net.d
+        - /opt/cni/bin
+        - /var/lib/kubernetes
+        - /var/run/kubernetes
+        
+    - name: Distribute all certificates and kubeconfig files
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        remote_src: no
+      loop:
+        - {src: "/tmp/ca-authority/{{ INSTANCE }}-key.pem", dest: /var/lib/kubelet/}
+        - {src: "/tmp/ca-authority/{{ INSTANCE }}.pem", dest: /var/lib/kubelet/}
+        - {src: "/tmp/ca-authority/{{ INSTANCE }}.kubeconfig", dest: /var/lib/kubelet/kubeconfig}
+        - {src: /tmp/ca-authority/kube-proxy.kubeconfig, dest: /var/lib/kube-proxy/kubeconfig}
+        - {src: /tmp/ca-authority/admin.kubeconfig, dest: /}
+        - {src: /tmp/ca-authority/ca.pem, dest: /var/lib/kubernetes/}
+        

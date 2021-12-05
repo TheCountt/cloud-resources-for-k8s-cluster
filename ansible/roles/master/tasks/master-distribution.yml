@@ -1,0 +1,28 @@
+---
+- name: Create directory and copy certificates and files into the directory
+  hosts: tag_Name_master_0, tag_Name_master_1, tag_Name_master_2
+  user: ubuntu
+  become: yes
+  tasks:
+    - name: Create /var/lib/kubernetes
+      ansible.builtin.file:
+        path: /var/lib/kubernetes
+        state: directory
+        follow: yes
+
+    - name: Copy certificates and configuration files 
+      copy:
+        src: "/tmp/ca-authority/{{ item }}"
+        dest: /var/lib/kubernetes
+        remote_src: no
+      loop:
+        - ca.pem
+        - ca-key.pem
+        - service-account-key.pem
+        - service-account.pem
+        - master-kubernetes.pem
+        - master-kubernetes-key.pem
+        - kube-scheduler.kubeconfig
+        - kube-controller-manager.kubeconfig
+        - encryption-config.yaml
+        - admin.kubeconnfig
