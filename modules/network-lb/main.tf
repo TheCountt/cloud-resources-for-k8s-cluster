@@ -12,14 +12,11 @@ resource "aws_lb" "k8s-external-nlb" {
 
 # Create a Target Group
 resource "aws_lb_target_group" "k8s-tg" {
-  # health_check {
-  #   interval            = 10
-  #   path                = "/"
-  #   protocol            = "TCP"
-  #   timeout             = 5
-  #   healthy_threshold   = 5
-  #   unhealthy_threshold = 2
-  # }
+   health_check {
+     interval            = 30
+     port                = 6443
+     protocol            = "TCP" 
+   }
 
   name        = "k8s-tg"
   port        = 6443
@@ -33,7 +30,9 @@ resource "aws_lb_target_group" "k8s-tg" {
 # Register Target IPs
 resource "aws_lb_target_group_attachment" "k8s-lb-tg" {
   target_group_arn = aws_lb_target_group.k8s-tg.arn
-  target_id        = var.target_id
+  count          = 3
+  target_id      = element(var.master_ip_list, count.index)
+  /* target_id        = var.target_id */
   port             = 6443
 }
 

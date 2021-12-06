@@ -16,5 +16,3 @@ variable "key_name" {
     type = string
     default = "k8s-cluster-from-ground-up"
 }
-
-variable "master" {}

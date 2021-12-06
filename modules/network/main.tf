@@ -36,6 +36,7 @@ resource "aws_vpc_dhcp_options_association" "k8s-dns_resolver" {
 resource "aws_subnet" "k8s-subnet" {
   vpc_id     = aws_vpc.k8s-vpc.id
   cidr_block = var.subnet_cidr
+  map_public_ip_on_launch = true
 
   tags = {
     Name = var.resource_tag

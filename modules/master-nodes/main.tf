@@ -20,7 +20,7 @@ resource "aws_instance" "k8s-master" {
   connection {
       type        = "ssh"
       host        = self.public_ip
-      user        = var.master
+      user        = "ubuntu"
       private_key = file("/home/thecountt/k8s-cluster-from-ground-up/ssh/k8s-cluster-from-ground-up.id_rsa")
       timeout     = "5m"
    }

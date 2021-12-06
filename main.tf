@@ -14,16 +14,7 @@ module "network" {
   resource_tag                   = var.resource_tag
 }
 
-module "network-lb" {
-  source         = "./modules/network-lb"
-  vpc_id         = module.network.vpc_id
-  subnet         = module.network.subnets
-  count          = 3
-  master_ip_list = var.master_ip_list
-  target_id      = element(var.master_ip_list, count.index)
-  resource_tag   = var.resource_tag
-}
-
+# the module creates keypair
 module "keypair" {
   source          = "./modules/keypair"
 }
@@ -38,14 +29,13 @@ module "master-nodes" {
   ami           = var.ami
   k8s-sg        = module.network.security-group
   private_ip    = element(var.master_ip_list, count.index)
-  master        = "master-${count.index}"
 
   tags = {
-    Name = "k8s-cluster-from-ground-up-master-${count.index}"
+    Name = "master-${count.index}"
   }
 }
 
-
+# the module creates worker-nodes
 module "worker-nodes" {
   source        = "./modules/worker-nodes"
   region        = var.region
@@ -55,9 +45,19 @@ module "worker-nodes" {
   ami           = var.ami
   k8s-sg        = module.network.security-group
   private_ip    = element(var.worker_ip_list, count.index)
-  worker        = "worker-${count.index}"
-
+  
   tags = {
-    Name = "k8s-cluster-from-ground-up-worker-${count.index}"
+    Name = "worker-${count.index}"
   }
+}
+
+# the module creates network load-balancer
+module "network-lb" {
+  source         = "./modules/network-lb"
+  vpc_id         = module.network.vpc_id
+  subnet         = module.network.subnets
+  /* count          = 3 */
+  /* master_ip_list = var.master_ip_list
+  target_id      = element(var.master_ip_list, count.index) */
+  resource_tag   = var.resource_tag
 }
