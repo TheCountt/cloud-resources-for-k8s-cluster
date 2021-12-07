@@ -1,10 +1,4 @@
----
-- name: Generate certificates and config files
-  hosts: localhost
-  connection: local
-  vars:
-    - KUBERNETES_API_SERVER_ADDRESS: k8s-external-nlb-ac5a0a61ed2078fa.elb.us-west-1.amazonaws.com
-  tasks:
+---  
     - name: Create ca-authority directory
       ansible.builtin.file:
         path: /tmp/ca-authority
@@ -39,14 +33,6 @@
       args:
         chdir: /tmp/ca-authority
         creates: encryption-config.yaml
-
-- import_playbook: ./plays/distribute-master.yaml
-
-- import_playbook: ./plays/master.yaml
-
-- import_playbook: ./plays/distribute-worker.yaml
-
-- import_playbook: ./plays/worker.yaml
 
 # - name: Create and bind cluster roles
 #   hosts: localhost

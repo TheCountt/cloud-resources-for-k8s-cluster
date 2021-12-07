@@ -1,9 +1,4 @@
 ---
-- name: Create directory and copy certificates and files into the directory
-  hosts: tag_Name_master_0, tag_Name_master_1, tag_Name_master_2
-  user: ubuntu
-  become: yes
-  tasks:
     - name: Create /var/lib/kubernetes
       ansible.builtin.file:
         path: /var/lib/kubernetes

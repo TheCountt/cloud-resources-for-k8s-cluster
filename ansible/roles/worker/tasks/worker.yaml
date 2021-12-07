@@ -1,15 +1,6 @@
 ---
-- name: Configuration of Worker nodes
-  hosts: tag_Name_worker_0, tag_Name_worker_1, tag_Name_worker_2
-  user: ubuntu
-  become: yes
-  vars:
-    - NAME: "k8s-cluster-from-ground-up"
-    - WORKER_NAME: "worker-{{ ansible_eth0.ipv4.address[-1] }}"
-    - POD_CIDR: "172.20.{{ ansible_eth0.ipv4.address[-1] }}.0/24"
-    
-  tasks:
     - name: Install required dependencies
+      become: yes
       apt:
         name:
           - socat
@@ -137,6 +128,7 @@
         - {src: ./worker/templates/kube-proxy.service, dest: /etc/systemd/system/kube-proxy.service}
 
     - name: Start services
+      become: yes
       systemd: 
         name: "{{ item }}"
         state: restarted

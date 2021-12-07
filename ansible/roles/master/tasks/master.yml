@@ -1,21 +1,11 @@
 ---
-- name: Configuration of Controller nodes
-  hosts: tag_Name_master_0, tag_Name_master_1, tag_Name_master_2
-  user: ubuntu
-  become: yes
-  vars:
-    INTERNAL_IP: "{{ ansible_eth0.ipv4.address }}"
-    ETCD_NAME: "master-{{ ansible_eth0.ipv4.address[-1] }}"
-    NAME: "k8s-cluster-from-ground-up"
-    VPC_CIDR: "172.31.0.0/16"
-  
-  tasks:
     - name: Create and bind cluster roles
       ansible.builtin.shell: ./binding.sh
       args:
         chdir: /tmp
     
     - name: Download etcd
+      become: yes
       get_url:
         url: https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz
         dest: /tmp/etcd-v3.4.15-linux-amd64.tar.gz
@@ -78,6 +68,7 @@
         dest: /etc/systemd/system/etcd.service
 
     - name: Start etcd service
+      become: yes
       systemd: 
         name: etcd
         state: started
@@ -85,6 +76,7 @@
         daemon_reload: yes
 
     - name: Download official Kubernetes release binaries
+      become: yes
       get_url:
         url: "{{ item }}"
         dest: /tmp
@@ -138,6 +130,7 @@
         - {src: kube-scheduler.service, dest: /etc/systemd/system/kube-scheduler.service}
 
     - name: Start Controller services
+      become: yes
       ansible.builtin.systemd: 
         name: "{{ item }}"
         state: restarted

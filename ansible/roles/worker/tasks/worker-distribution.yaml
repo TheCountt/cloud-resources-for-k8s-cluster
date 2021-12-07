@@ -1,11 +1,4 @@
 ---
-- name: worker nodes 
-  hosts: tag_Name_worker_0, tag_Name_worker_1, tag_Name_worker_2
-  user: ubuntu
-  become: yes
-  vars:
-    - INSTANCE: "worker-{{ ansible_eth0.ipv4.address[-1] }}"
-  tasks:
     - name: Create directories to configure kubelet, kube-proxy, cni, and a directory to keep the kubernetes root ca file
       ansible.builtin.file:
         path: "{{ item }}"

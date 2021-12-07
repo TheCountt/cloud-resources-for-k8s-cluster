@@ -1,0 +1,4 @@
+---
+name: "k8s-cluster-from-ground-up"
+worker_name: "worker-{{ ansible_eth0.ipv4.address[-1] }}"
+pod_cidr: "172.20.{{ ansible_eth0.ipv4.address[-1] }}.0/24"
