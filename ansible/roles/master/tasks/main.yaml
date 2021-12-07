@@ -4,7 +4,7 @@
       args:
         chdir: /tmp
     
-        - name: Create /var/lib/kubernetes
+    - name: Create /var/lib/kubernetes
       ansible.builtin.file:
         path: /var/lib/kubernetes
         state: directory
