@@ -1,4 +1,9 @@
 ---
+
+- hosts: localhost
+- name: workstation assignment
+  import_playbook: ../static-assignments/workstation.yml
+
 - hosts: tag_Name_master_0, tag_Name_master_1, tag_Name_master_2 
 - name: master nodes assignment
   import_playbook: ../static-assignments/master-nodes.yml
