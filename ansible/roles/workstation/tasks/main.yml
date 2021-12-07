@@ -7,7 +7,7 @@
 
     - name: Copy to ca-authority directory
       template:
-        src: "~/k8s-cluster-from-ground-up/ansible/roles/local-machine/templates/certificates.sh.j2"
+        src: "~/k8s-cluster-from-ground-up/ansible/roles/workstation/templates/certificates.sh.j2"
         dest: "/tmp/ca-authority/{{ item }}"
         mode: +x
       loop:
@@ -29,7 +29,7 @@
         # creates: admin.kubeconfig
 
     - name: Generate encryption.yaml
-      ansible.builtin.shell: ./encryption.sh
+      ansible.builtin.shell: ./encryption-config.sh
       args:
         chdir: /tmp/ca-authority
         creates: encryption-config.yaml
