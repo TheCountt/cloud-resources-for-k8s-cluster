@@ -18,9 +18,9 @@
         dest: "{{ item.dest }}"
         remote_src: no
       loop:
-        - {src: "/tmp/ca-authority/{{ INSTANCE }}-key.pem", dest: /var/lib/kubelet/}
-        - {src: "/tmp/ca-authority/{{ INSTANCE }}.pem", dest: /var/lib/kubelet/}
-        - {src: "/tmp/ca-authority/{{ INSTANCE }}.kubeconfig", dest: /var/lib/kubelet/kubeconfig}
+        - {src: "/tmp/ca-authority/{{ instance }}-key.pem", dest: /var/lib/kubelet/}
+        - {src: "/tmp/ca-authority/{{ instance }}.pem", dest: /var/lib/kubelet/}
+        - {src: "/tmp/ca-authority/{{ instance }}.kubeconfig", dest: /var/lib/kubelet/kubeconfig}
         - {src: /tmp/ca-authority/kube-proxy.kubeconfig, dest: /var/lib/kube-proxy/kubeconfig}
         - {src: /tmp/ca-authority/admin.kubeconfig, dest: /}
         - {src: /tmp/ca-authority/ca.pem, dest: /var/lib/kubernetes/}
