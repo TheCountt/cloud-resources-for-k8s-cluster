@@ -1,4 +1,4 @@
-region = "us-west-1"
+region = "us-west-2"
 
 vpc_cidr = "172.31.0.0/16"
 
@@ -20,6 +20,6 @@ master_ip_list = ["172.31.0.10", "172.31.0.11", "172.31.0.12"]
 
 worker_ip_list = ["172.31.0.20", "172.31.0.21", "172.31.0.22"]
 
-ami = "ami-09005387a0b4f9a81"
+ami = "ami-0477c9562acb01819"
 
 instance_type = "t2.micro"
