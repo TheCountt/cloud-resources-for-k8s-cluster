@@ -23,5 +23,3 @@ worker_ip_list = ["172.31.0.20", "172.31.0.21", "172.31.0.22"]
 ami = "ami-09005387a0b4f9a81"
 
 instance_type = "t2.micro"
-
-# account_no = "305311085423"

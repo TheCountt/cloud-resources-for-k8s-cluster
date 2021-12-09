@@ -7,7 +7,7 @@
 
     - name: Copy to ca-authority directory
       template:
-        src: "~/k8s-cluster-from-ground-up/ansible/roles/workstation/templates/certificates.sh.j2"
+        src: "~/k8s-cluster-from-ground-up/ansible/roles/workstation/templates/{{ item }}.j2"
         dest: "/tmp/ca-authority/{{ item }}"
         mode: +x
       loop:
@@ -20,13 +20,13 @@
       ansible.builtin.shell: ./certificates.sh
       args:
         chdir: /tmp/ca-authority
-        # creates: service-account-csr.json
+        creates: service-account-csr.json
 
     - name: Generate kubeconfig files
       ansible.builtin.shell: ./kubeconfigs.sh
       args:
         chdir: /tmp/ca-authority
-        # creates: admin.kubeconfig
+        creates: admin.kubeconfig
 
     - name: Generate encryption.yaml
       ansible.builtin.shell: ./encryption-config.sh

@@ -1,3 +1,4 @@
 ---
 name: k8s-cluster-from-ground-up
-kubernetes_api_server_address: k8s-external-nlb-2dc4f8f535e16f55.elb.us-west-1.amazonaws.com
+aws_region: us-west-1
+kubernetes_api_server_address: k8s-external-nlb-605e10ed020f46b6.elb.us-west-1.amazonaws.com

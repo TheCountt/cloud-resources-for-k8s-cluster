@@ -1,8 +1,4 @@
 --- 
-    - name: Create and bind cluster roles
-      ansible.builtin.shell: ./binding.sh
-      args:
-        chdir: /tmp
     
     - name: Create /var/lib/kubernetes
       ansible.builtin.file:
@@ -13,7 +9,7 @@
     - name: Copy certificates and configuration files 
       copy:
         src: "/tmp/ca-authority/{{ item }}"
-        dest: /var/lib/kubernetes
+        dest: "/var/lib/kubernetes"
         remote_src: no
       loop:
         - ca.pem
@@ -25,7 +21,7 @@
         - kube-scheduler.kubeconfig
         - kube-controller-manager.kubeconfig
         - encryption-config.yaml
-        - admin.kubeconnfig
+        - admin.kubeconfig
     
     
     - name: Download etcd
@@ -165,3 +161,8 @@
         - kube-apiserver
         - kube-controller-manager
         - kube-scheduler
+
+    - name: Create and bind cluster roles
+      ansible.builtin.shell: ./binding.sh
+      args:
+        chdir: /tmp

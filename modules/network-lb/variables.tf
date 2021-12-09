@@ -10,4 +10,4 @@ variable "master_ip_list" {
   type = list
 }
 
-/* variable "target_id" {} */
+# variable "target_id" {}

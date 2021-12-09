@@ -26,6 +26,7 @@ override.tf.json
 # !example_override.tf
 tasks-master-distribution.yml
 tasks-worker-distribution.yaml
+
 vars-worker-distribution.yaml
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan

@@ -16,7 +16,7 @@ module "network" {
 
 # the module creates keypair
 module "keypair" {
-  source          = "./modules/keypair"
+  source = "./modules/keypair"
 }
 
 # The Module creates instances 
@@ -24,15 +24,15 @@ module "master-nodes" {
   source        = "./modules/master-nodes"
   region        = var.region
   subnet        = module.network.subnets
-  count         = 3
+  # count         = 3
   instance_type = var.instance_type
   ami           = var.ami
   k8s-sg        = module.network.security-group
-  private_ip    = element(var.master_ip_list, count.index)
+  # private_ip    = element(var.master_ip_list, count.index)
 
-  tags = {
-    Name = "master-${count.index}"
-  }
+  # tags = {
+  #   Name = "master-${count.index}"
+  # }
 }
 
 # the module creates worker-nodes
@@ -45,7 +45,7 @@ module "worker-nodes" {
   ami           = var.ami
   k8s-sg        = module.network.security-group
   private_ip    = element(var.worker_ip_list, count.index)
-  
+
   tags = {
     Name = "worker-${count.index}"
   }
@@ -53,11 +53,11 @@ module "worker-nodes" {
 
 # the module creates network load-balancer
 module "network-lb" {
-  source         = "./modules/network-lb"
-  vpc_id         = module.network.vpc_id
-  subnet         = module.network.subnets
+  source = "./modules/network-lb"
+  vpc_id = module.network.vpc_id
+  subnet = module.network.subnets
   /* count          = 3 */
   /* master_ip_list = var.master_ip_list
   target_id      = element(var.master_ip_list, count.index) */
-  resource_tag   = var.resource_tag
+  resource_tag = var.resource_tag
 }
