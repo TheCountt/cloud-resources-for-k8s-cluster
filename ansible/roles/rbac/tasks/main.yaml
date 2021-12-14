@@ -3,7 +3,9 @@
   template:
     src: "./templates/binding.sh.j2"
     dest: "/"
-    mode: +x
+    owner: ubuntu
+    group: ubuntu
+    mode: '0644'
 
 - name: Create and bind cluster roles
   ansible.builtin.shell: ./binding.sh
