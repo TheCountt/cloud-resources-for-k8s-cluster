@@ -1,0 +1,6 @@
+---
+- hosts: tag_Name_master_0
+  gather_facts: true
+  become: true
+  roles:
+     - rbac

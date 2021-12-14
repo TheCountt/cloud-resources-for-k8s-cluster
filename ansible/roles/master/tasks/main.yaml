@@ -31,11 +31,6 @@
         dest: /tmp/etcd-v3.4.15-linux-amd64.tar.gz
         timeout: 600
     
-    # - name: Copy etcd binary
-    #   copy:
-    #     src: "~/k8s-cluster-from-ground-up/etcd-v3.5.1-linux-amd64.tar.gz"
-    #     dest: /tmp/etcd-v3.5.1-linux-amd64.tar.gz
-    #     remote_src: no
     
     - name: Unarchive etcd binary file
       unarchive:
@@ -93,6 +88,7 @@
       template:
         src: ./templates/etcd.service.j2
         dest: /etc/systemd/system/etcd.service
+      notify: Restart etcd service
 
     - name: Start etcd service
       become: yes
@@ -107,12 +103,14 @@
       get_url:
         url: "{{ item }}"
         dest: /tmp
+        timeout: 60
       loop:
         - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-apiserver
         - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-controller-manager
         - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-scheduler
         - https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl
 
+    
     - name: Copy kube* files into destination directory
       copy:
         src: "/tmp/{{ item }}"
@@ -130,14 +128,15 @@
         paths: "/usr/local/bin/"
         recurse: no
         patterns: "kube*"
-      register: kube-components
+      register: kube_components
 
 
     - name: Make kube* files executable
       file:
         path: "{{ item.path }}"
         mode: +x
-      with_items: "{{ kube-components.files }}"
+      with_items: "{{ kube_components.files }}"
+
 
     - name: Create /etc/kubernetes/config directory
       ansible.builtin.file:
@@ -148,27 +147,23 @@
     
     - name: Copy kube* templates
       template:
-        src: "./master/templates/{{ item.src }}.j2"
+        src: "./templates/{{ item.src }}.j2"
         dest: "{{ item.dest }}"
       loop:
         - {src: kube-scheduler.yaml, dest: /etc/kubernetes/config/kube-scheduler.yaml}
         - {src: kube-controller-manager.service, dest: /etc/systemd/system/kube-controller-manager.service}
         - {src: kube-apiserver.service, dest: /etc/systemd/system/kube-apiserver.service}
         - {src: kube-scheduler.service, dest: /etc/systemd/system/kube-scheduler.service}
+      notify: Restart Controller services
 
     - name: Start Controller services
       become: yes
       ansible.builtin.systemd: 
         name: "{{ item }}"
-        state: restarted
+        state: started
         enabled: yes
         daemon_reload: yes
       loop:
         - kube-apiserver
         - kube-controller-manager
         - kube-scheduler
-
-    - name: Create and bind cluster roles
-      ansible.builtin.shell: ./binding.sh
-      args:
-        chdir: /tmp

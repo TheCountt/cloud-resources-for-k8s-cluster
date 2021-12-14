@@ -47,6 +47,11 @@
         state: absent
       with_items:
         - swap
+        - none
+
+    - name: Disable swap
+      command: swapoff -a
+      when: ansible_swaptotal_mb > 0
 
     - name: Download binaries for runc, cri-ctl, and containerd
       get_url: 
@@ -96,8 +101,8 @@
         src: "{{ item.src }}.j2"
         dest: "{{ item.dest }}"
       loop:
-        - { src: ./worker/templates/config.toml, dest: /etc/containerd/config.toml }
-        - { src: ./worker/templates/containerd.service, dest: /etc/systemd/system/containerd.service }
+        - { src: ./templates/config.toml, dest: /etc/containerd/config.toml }
+        - { src: ./templates/containerd.service, dest: /etc/systemd/system/containerd.service }
     
     - name: Download CNI
       get_url:
@@ -132,17 +137,17 @@
     
     - name: Copy loopback configuration files
       copy:
-        src: "./worker/templates/99-loopback.conf"
+        src: "./templates/99-loopback.conf"
         dest: /etc/cni/net.d/
 
     - name: Copy bridge template
       template:
-        src: ./worker/templates/172-20-bridge.conf.j2
+        src: ./templates/172-20-bridge.conf.j2
         dest: /etc/cni/net.d/172-20-bridge.conf
 
     - name: Copy kubelet-config.yaml template
       template:
-        src: ./worker/templates/kubelet-config.yaml.j2
+        src: ./templates/kubelet-config.yaml.j2
         dest: /var/lib/kubelet/kubelet-config.yaml
 
     - name: Move kubelet and kube-proxy config files
@@ -150,15 +155,17 @@
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
       loop:
-        - {src: ./worker/templates/kubelet.service, dest: /etc/systemd/system/kubelet.service}
-        - {src: ./worker/templates/kube-proxy-config.yaml, dest: /var/lib/kube-proxy/kube-proxy-config.yaml}
-        - {src: ./worker/templates/kube-proxy.service, dest: /etc/systemd/system/kube-proxy.service}
+        - {src: ./templates/kubelet.service, dest: /etc/systemd/system/kubelet.service}
+        - {src: ./templates/kube-proxy-config.yaml, dest: /var/lib/kube-proxy/kube-proxy-config.yaml}
+        - {src: ./templates/kube-proxy.service, dest: /etc/systemd/system/kube-proxy.service}
+      notify: Restart Kube* services
 
-    - name: Start services
+
+    - name: Start Kube* services
       become: yes
       systemd: 
         name: "{{ item }}"
-        state: restarted
+        state: started
         enabled: yes
         daemon_reload: yes
       loop:

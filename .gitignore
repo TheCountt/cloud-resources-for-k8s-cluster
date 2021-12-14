@@ -37,4 +37,10 @@ get-pip.py
 z-key-pair-tf-generated
 
 ##
-etcd*
+etcd-v3*
+
+##
+kube-apiserver
+kube-controller-manager
+kube-scheduler
+kubectl

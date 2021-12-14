@@ -33,19 +33,3 @@
       args:
         chdir: /tmp/ca-authority
         creates: encryption-config.yaml
-
-# - name: Create and bind cluster roles
-#   hosts: localhost
-#   connection: local
-#   tasks:
-#     - name: Create and bind cluster roles
-#       ansible.builtin.shell: ./binding.sh
-#       args:
-#         chdir: /tmp/ca-authority
-
-    # - name: Deploy CoreDNS Service
-    #   community.kubernetes.k8s:
-    #     state: present
-    #     src: ./templates/coredns-1.8.yaml
-    #     kubeconfig: /tmp/ca-authority/admin.kubeconfig
-    # kubectl patch node mynode -p '{"spec":{"podCIDR":""}}'
