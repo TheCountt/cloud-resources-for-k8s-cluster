@@ -7,13 +7,14 @@
 
     - name: Copy to ca-authority directory
       template:
-        src: "~/k8s-cluster-from-ground-up/ansible/roles/workstation/templates/{{ item }}.j2"
+        src: "./templates/{{ item }}.j2"
         dest: "/tmp/ca-authority/{{ item }}"
-        mode: +x
+        mode: +rwx
       loop:
         - certificates.sh
         - kubeconfigs.sh
         - encryption-config.sh
+        # - binding.sh
   
 
     - name: Generate certificates
@@ -33,3 +34,9 @@
       args:
         chdir: /tmp/ca-authority
         creates: encryption-config.yaml
+    
+    # - name: Create and bind cluster roles
+    #   ansible.builtin.shell: ./binding.sh
+    #   args:
+    #     chdir: /tmp/ca-authority
+    #     creates: cluster-role.yaml

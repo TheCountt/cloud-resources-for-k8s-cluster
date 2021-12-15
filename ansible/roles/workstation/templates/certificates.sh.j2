@@ -1,4 +1,3 @@
-chmod 777 -R /tmp/ca-authority
 cd /tmp/ca-authority
 
 {
@@ -286,4 +285,4 @@ cfssl gencert \
   -profile=kubernetes \
   service-account-csr.json | cfssljson -bare service-account
 }
-
+sudo chmod 777 -R /tmp/ca-authority

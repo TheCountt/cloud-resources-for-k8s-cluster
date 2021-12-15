@@ -22,6 +22,7 @@
         - kube-controller-manager.kubeconfig
         - encryption-config.yaml
         - admin.kubeconfig
+        # - cluster-role.yaml
     
     
     - name: Download etcd
@@ -167,3 +168,17 @@
         - kube-apiserver
         - kube-controller-manager
         - kube-scheduler
+
+    - name: Remove swapfile from /etc/fstab to disable swap
+      ansible.posix.mount:
+        name: "{{ item }}"
+        fstype: swap
+        state: absent
+      with_items:
+        - swap
+        - none
+
+    - name: Disable swap
+      command: swapoff -a
+      when: ansible_swaptotal_mb > 0
+

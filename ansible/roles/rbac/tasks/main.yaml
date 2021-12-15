@@ -1,13 +1,19 @@
 ---
-- name: Copy binding.sh to master nodes
+- name: Copy admin.config needed to create and bind cluster roles 
+  copy:
+    src: "/tmp/ca-authority/admin.kubeconfig"
+    dest: "/home/ubuntu"
+    remote_src: no
+
+- name: Copy binding.sh to master-0
   template:
-    src: "./templates/binding.sh.j2"
-    dest: "/"
+    src: "./binding.sh"
+    dest: "/home/ubuntu"
     owner: ubuntu
     group: ubuntu
-    mode: '0644'
+    mode: '0777'
 
 - name: Create and bind cluster roles
   ansible.builtin.shell: ./binding.sh
   args:
-    chdir: /
+    chdir: /home/ubuntu
