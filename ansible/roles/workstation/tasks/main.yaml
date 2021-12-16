@@ -34,6 +34,13 @@
       args:
         chdir: /tmp/ca-authority
         creates: encryption-config.yaml
+
+    - name: Recursively change permissions of /tmp/ca-authority
+      ansible.builtin.file: 
+        path: /tmp/ca-authority
+        recurse: yes
+        mode: '0777'
+        
     
     # - name: Create and bind cluster roles
     #   ansible.builtin.shell: ./binding.sh

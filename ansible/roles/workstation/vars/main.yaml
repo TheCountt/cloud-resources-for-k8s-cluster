@@ -1,5 +1,5 @@
 ---
 NAME: k8s-cluster-from-ground-up
 AWS_REGION: us-west-2
-KUBERNETES_API_SERVER_ADDRESS: k8s-external-nlb-7714f71d5a5f3682.elb.us-west-2.amazonaws.com
-KUBERNETES_PUBLIC_ADDRESS: k8s-external-nlb-7714f71d5a5f3682.elb.us-west-2.amazonaws.com
+KUBERNETES_API_SERVER_ADDRESS: k8s-external-nlb-e0c2cd27e72e8ff3.elb.us-west-2.amazonaws.com
+KUBERNETES_PUBLIC_ADDRESS: k8s-external-nlb-e0c2cd27e72e8ff3.elb.us-west-2.amazonaws.com
