@@ -183,5 +183,5 @@
       command: swapoff -a
 
     - name: curl master nodes
-      ansible.builtin.command: curl --cacert /var/lib/kubernetes/ca.pem https://$internal_ip:6443/version
+      ansible.builtin.command: curl --cacert /var/lib/kubernetes/ca.pem https://{{internal_ip}}:6443/version
 
