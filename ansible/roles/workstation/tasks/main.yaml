@@ -40,10 +40,3 @@
         path: /tmp/ca-authority
         recurse: yes
         mode: '0777'
-        
-    
-    # - name: Create and bind cluster roles
-    #   ansible.builtin.shell: ./binding.sh
-    #   args:
-    #     chdir: /tmp/ca-authority
-    #     creates: cluster-role.yaml

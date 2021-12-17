@@ -185,7 +185,8 @@
     - name: curl master nodes to check reachability
       ansible.builtin.command: curl --cacert /var/lib/kubernetes/ca.pem https://{{internal_ip}}:6443/version
 
-    
     - name: get cluster details
       ansible.builtin.command: kubectl cluster-info  --kubeconfig /var/lib/kubernetes/admin.kubeconfig
 
+    - name: get current namespaces
+      ansible.builtin.command: kubectl get namespaces --kubeconfig /var/lib/kubernetes/admin.kubeconfig
