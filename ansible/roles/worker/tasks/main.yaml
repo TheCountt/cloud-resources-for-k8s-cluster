@@ -51,7 +51,6 @@
 
     - name: Disable swap
       command: swapoff -a
-      when: ansible_swaptotal_mb > 0
 
     - name: Download binaries for runc, cri-ctl, and containerd
       get_url: 
