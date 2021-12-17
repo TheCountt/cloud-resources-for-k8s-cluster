@@ -80,3 +80,22 @@ VPC_ID=$(aws ec2 create-vpc \
   --resources ${VPC_ID} \
   --tags Key=Name,Value=${NAME}
   ```
+**Domain Name System – DNS**
+
+- Enable DNS support for your VPC
+```
+aws ec2 modify-vpc-attribute \
+--vpc-id ${VPC_ID} \
+--enable-dns-support '{"Value": true}'
+```
+- Enable DNS support for hostnames
+```
+aws ec2 modify-vpc-attribute \
+--vpc-id ${VPC_ID} \
+--enable-dns-hostnames '{"Value": true}'
+```
+**AWS Region**
+- Open the variable file `/etc/environment` and paste the variable below, then save and close the file:
+```
+AWS_REGION=<name_of_region>
+```
