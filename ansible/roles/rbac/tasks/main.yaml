@@ -20,3 +20,14 @@
   ansible.builtin.shell: ./binding.sh
   args:
     chdir: /home/ubuntu
+
+# - name: for rbac
+#   template:
+#     src: "./templates/binding.sh"
+#     dest: "/tmp/ca-authority"
+#     mode: +x
+
+# - name: Create and bind cluster roles
+#   ansible.builtin.shell: ./binding.sh
+#   args:
+#     chdir: /tmp/ca-authority

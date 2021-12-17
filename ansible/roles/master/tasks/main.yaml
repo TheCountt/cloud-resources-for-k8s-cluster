@@ -22,9 +22,8 @@
         - kube-controller-manager.kubeconfig
         - encryption-config.yaml
         - admin.kubeconfig
-        # - cluster-role.yaml
-    
-    
+
+      
     - name: Download etcd
       become: yes
       ansible.builtin.get_url:
@@ -182,6 +181,11 @@
     - name: Disable swap
       command: swapoff -a
 
-    - name: curl master nodes
+    
+    - name: curl master nodes to check reachability
       ansible.builtin.command: curl --cacert /var/lib/kubernetes/ca.pem https://{{internal_ip}}:6443/version
+
+    
+    - name: get cluster details
+      ansible.builtin.command: kubectl cluster-info  --kubeconfig /var/lib/kubernetes/admin.kubeconfig
 

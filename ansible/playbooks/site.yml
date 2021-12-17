@@ -7,12 +7,11 @@
 - name: master nodes assignment
   import_playbook: ../static-assignments/master.yaml
 
-- hosts: tag_Name_master_0
-- name: cluster role binding assignment
-  import_playbook: ../static-assignments/rbac.yaml
-
 - hosts: tag_Name_worker_0, tag_Name_worker_1, tag_Name_worker_2
 - name: worker nodes assignment
   import_playbook: ../static-assignments/worker.yaml
 
   
+- hosts: tag_Name_master_0
+- name: cluster role binding assignment
+  import_playbook: ../static-assignments/rbac.yaml
