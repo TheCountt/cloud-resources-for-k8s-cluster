@@ -99,3 +99,34 @@ aws ec2 modify-vpc-attribute \
 ```
 AWS_REGION=<name_of_region>
 ```
+**Dynamic Host Configuration Protocol – DHCP**
+
+- Configure DHCP Options Set
+
+Dynamic Host Configuration Protocol (DHCP) is a network management protocol used on Internet Protocol networks for automatically assigning IP addresses and other communication parameters to devices connected to the network using a client–server architecture.
+
+AWS automatically creates and associates a DHCP option set for your Amazon VPC upon creation and sets two options:          
+
+    - domain-name-servers (defaults to AmazonProvidedDNS)
+    
+    - domain-name (defaults to the domain name for your set region). AmazonProvidedDNS is an Amazon Domain Name System (DNS) server, and this option enables DNS for instances to communicate using DNS names.
+
+By default EC2 instances have fully qualified names like *ip-172-50-197-106.eu-central-1.compute.internal.* But you can set your own configuration using an example below:
+
+```
+DHCP_OPTION_SET_ID=$(aws ec2 create-dhcp-options \
+  --dhcp-configuration \
+    "Key=domain-name,Values=$AWS_REGION.compute.internal" \
+    "Key=domain-name-servers,Values=AmazonProvidedDNS" \
+  --output text --query 'DhcpOptions.DhcpOptionsId')
+```
+- Tag the DHCP Option set:
+```
+aws ec2 create-tags \
+  --resources ${DHCP_OPTION_SET_ID} \
+  --tags Key=Name,Value=${NAME}
+  ```
+- Open the variable file `/etc/environment` and paste the value of DHCP_OPTION_SET_ID(run the command `echo $DHCP_OPTION_SET_ID` to get its value). Then save and close.
+
+```
+DHCP_OPTION_SET_ID=<value of DHCP_OPTION_SET_ID>
