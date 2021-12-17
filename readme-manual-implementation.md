@@ -130,3 +130,149 @@ aws ec2 create-tags \
 
 ```
 DHCP_OPTION_SET_ID=<value of DHCP_OPTION_SET_ID>
+```
+- Associate the DHCP Option set with the VPC:
+
+```
+aws ec2 associate-dhcp-options \
+  --dhcp-options-id ${DHCP_OPTION_SET_ID} \
+  --vpc-id ${VPC_ID}
+```
+
+**Subnet**
+
+- Create the Subnet:
+
+```
+SUBNET_ID=$(aws ec2 create-subnet \
+  --vpc-id ${VPC_ID} \
+  --cidr-block 172.31.0.0/24 \
+  --output text --query 'Subnet.SubnetId')
+```
+- Input the variable into the variable file, `/etc/environment`
+```
+SUBNET_ID=<subnet_cidr>
+```
+
+- Tag it
+```
+aws ec2 create-tags \
+  --resources ${SUBNET_ID} \
+  --tags Key=Name,Value=${NAME}
+```
+
+**Internet Gateway – IGW**
+
+- Create the Internet Gateway and attach it to the VPC:
+```
+INTERNET_GATEWAY_ID=$(aws ec2 create-internet-gateway \
+  --output text --query 'InternetGateway.InternetGatewayId')
+```
+```
+aws ec2 create-tags \
+  --resources ${INTERNET_GATEWAY_ID} \
+  --tags Key=Name,Value=${NAME}
+```
+```
+aws ec2 attach-internet-gateway \
+  --internet-gateway-id ${INTERNET_GATEWAY_ID} \
+  --vpc-id ${VPC_ID}
+```
+- Input the value of `INTERNET_GATEWAY_ID` into the variable file
+
+**Route tables**
+
+Create route tables, associate the route table to subnet, and create a route to allow external traffic to the Internet through the Internet Gateway:
+```
+ROUTE_TABLE_ID=$(aws ec2 create-route-table \
+  --vpc-id ${VPC_ID} \
+  --output text --query 'RouteTable.RouteTableId')
+```
+```
+aws ec2 create-tags \
+  --resources ${ROUTE_TABLE_ID} \
+  --tags Key=Name,Value=${NAME}
+```
+```
+aws ec2 associate-route-table \
+  --route-table-id ${ROUTE_TABLE_ID} \
+  --subnet-id ${SUBNET_ID}
+```
+```
+aws ec2 create-route \
+  --route-table-id ${ROUTE_TABLE_ID} \
+  --destination-cidr-block 0.0.0.0/0 \
+  --gateway-id ${INTERNET_GATEWAY_ID}
+  ```
+- Input the value of `ROUTE_TABLE_ID` into the variable file
+
+### B.  Configure Security Groups ###
+
+**Security Groups**
+
+- Create the security group and store its ID in a variable
+```
+SECURITY_GROUP_ID=$(aws ec2 create-security-group \
+  --group-name ${NAME} \
+  --description "Kubernetes cluster security group" \
+  --vpc-id ${VPC_ID} \
+  --output text --query 'GroupId')
+```
+
+- Create the NAME tag for the security group
+```
+aws ec2 create-tags \
+  --resources ${SECURITY_GROUP_ID} \
+  --tags Key=Name,Value=${NAME}
+```
+
+- Create Inbound traffic for all communication within the subnet to connect on ports used by the master node(s)
+```
+aws ec2 authorize-security-group-ingress \
+    --group-id ${SECURITY_GROUP_ID} \
+    --ip-permissions IpProtocol=tcp,FromPort=2379,ToPort=2380,IpRanges='[{CidrIp=172.31.0.0/24}]'
+```
+- Create Inbound traffic for all communication within the subnet to connect on ports used by the worker nodes
+```
+aws ec2 authorize-security-group-ingress \
+    --group-id ${SECURITY_GROUP_ID} \
+    --ip-permissions IpProtocol=tcp,FromPort=30000,ToPort=32767,IpRanges='[{CidrIp=172.31.0.0/24}]'
+```
+- Create inbound traffic to allow connections to the Kubernetes API Server listening on port 6443
+```
+aws ec2 authorize-security-group-ingress \
+  --group-id ${SECURITY_GROUP_ID} \
+  --protocol tcp \
+  --port 6443 \
+  --cidr 0.0.0.0/0
+```
+
+- Create Inbound traffic for SSH from anywhere (***Do not do this in production. Limit access ONLY to IPs or CIDR that MUST connect***)
+```
+aws ec2 authorize-security-group-ingress \
+  --group-id ${SECURITY_GROUP_ID} \
+  --protocol tcp \
+  --port 22 \
+  --cidr 0.0.0.0/0
+```
+- Create ICMP ingress for all types
+```
+aws ec2 authorize-security-group-ingress \
+  --group-id ${SECURITY_GROUP_ID} \
+  --protocol icmp \
+  --port -1 \
+  --cidr 0.0.0.0/0
+```
+
+**Network Load Balancer**
+
+- Create a network Load balancer
+
+```
+LOAD_BALANCER_ARN=$(aws elbv2 create-load-balancer \
+--name ${NAME} \
+--subnets ${SUBNET_ID} \
+--scheme internet-facing \
+--type network \
+--output text --query 'LoadBalancers[].LoadBalancerArn')
+```
