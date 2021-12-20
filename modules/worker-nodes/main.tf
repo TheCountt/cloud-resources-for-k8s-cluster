@@ -8,7 +8,7 @@ resource "aws_instance" "k8s-worker" {
   associate_public_ip_address = true
   
   key_name                    = "k8s-cluster-from-ground-up"
-  user_data                   = filebase64("~/k8s-cluster-from-ground-up/modules/worker-nodes/user-data.sh")
+#   user_data                   = filebase64("~/k8s-cluster-from-ground-up/modules/worker-nodes/user-data.sh")
   tags                        = var.tags
 
   root_block_device {
