@@ -1,5 +1,5 @@
 ---
-- hosts: tag_Name_master_0
+- hosts: tag_Name_master_0, tag_Name_master_1, tag_Name_master_2
   gather_facts: true
   become: true
   roles:

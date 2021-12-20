@@ -22,7 +22,7 @@
         - {src: "/tmp/ca-authority/{{ instance }}.pem", dest: /var/lib/kubelet/}
         - {src: "/tmp/ca-authority/{{ instance }}.kubeconfig", dest: /var/lib/kubelet/kubeconfig}
         - {src: /tmp/ca-authority/kube-proxy.kubeconfig, dest: /var/lib/kube-proxy/kubeconfig}
-        - {src: /tmp/ca-authority/admin.kubeconfig, dest: /}
+        - {src: /tmp/ca-authority/admin.kubeconfig, dest: /var/lib/kubernetes/}
         - {src: /tmp/ca-authority/ca.pem, dest: /var/lib/kubernetes/}
     
     
