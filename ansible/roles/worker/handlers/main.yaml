@@ -7,5 +7,6 @@
     enabled: yes
     daemon_reload: yes
   loop:
+    - containerd
     - kubelet
     - kube-proxy
