@@ -27,11 +27,7 @@ module "master-nodes" {
   instance_type = var.instance_type
   ami           = var.ami
   k8s-sg        = module.network.security-group
-
-<<<<<<< HEAD
 }
-=======
->>>>>>> 1247700f0a4c2dee04f3fb5c245b0a7442ed8c1e
 
 # the module creates worker-nodes
 module "worker-nodes" {
@@ -41,20 +37,12 @@ module "worker-nodes" {
   instance_type = var.instance_type
   ami           = var.ami
   k8s-sg        = module.network.security-group
-<<<<<<< HEAD
 }
-=======
-  private_ip    = element(var.worker_ip_list, count.index)
-
->>>>>>> 1247700f0a4c2dee04f3fb5c245b0a7442ed8c1e
 
 # the module creates network load-balancer
 module "network-lb" {
   source = "./modules/network-lb"
   vpc_id = module.network.vpc_id
   subnet = module.network.subnets
-  /* count          = 3 */
-  /* master_ip_list = var.master_ip_list
-  target_id      = element(var.master_ip_list, count.index) */
   resource_tag = var.resource_tag
 }
