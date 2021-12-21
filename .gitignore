@@ -40,7 +40,4 @@ z-key-pair-tf-generated
 etcd-v3*
 
 ##
-kube-apiserver
-kube-controller-manager
-kube-scheduler
-kubectl
+tooling.yml
