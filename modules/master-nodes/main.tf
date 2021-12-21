@@ -26,7 +26,7 @@ resource "aws_instance" "k8s-master" {
    }
 
    tags = {
-    Name = "-k8s-cluster-from-ground-up-master-${count.index}"
+    Name = "k8s-cluster-from-ground-up-master-${count.index}"
    }
 
 }
