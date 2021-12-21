@@ -1,5 +1,5 @@
 ---
-- hosts: tag_Name_k8s_cluster_from_ground_up_master_0, tag_Name_k8s_cluster_from_ground_up_master_1, tag_k8s_cluster_from_ground_up_Name_master_2
+- hosts: tag_Name_k8s_cluster_from_ground_up_master_0, tag_Name_k8s_cluster_from_ground_up_master_1, tag_Name_k8s_cluster_from_ground_up_Name_master_2
   gather_facts: true
   become: true
   roles:
