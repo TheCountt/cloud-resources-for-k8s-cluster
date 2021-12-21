@@ -1,5 +1,5 @@
 ---
-- hosts: tag_Name_worker_0, tag_Name_worker_1, tag_Name_worker_2
+- hosts: tag_Name_k8s_cluster_from_ground_up_worker_0, tag_Name_k8s_cluster_from_ground_up_worker_1, tag_Name_k8s_cluster_from_ground_up_worker_2
   gather_facts: true
   become: true
   roles:

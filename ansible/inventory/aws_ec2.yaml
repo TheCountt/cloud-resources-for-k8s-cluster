@@ -13,12 +13,12 @@ keyed_groups:
 
 filters:
   tag:Name:
-    - master-0
-    - master-1
-    - master-2
-    - worker-0
-    - worker-1
-    - worker-2
+    - k8s-cluster-from-ground-up-master-0
+    - k8s-cluster-from-ground-up-master-1
+    - k8s-cluster-from-ground-up-master-2
+    - k8s-cluster-from-ground-up-worker-0
+    - k8s-cluster-from-ground-up-worker-1
+    - k8s-cluster-from-ground-up-worker-2
   instance-state-name : running
   
 hostnames:

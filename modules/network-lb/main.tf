@@ -1,6 +1,6 @@
 # Create an External(Internet-Facing) Load Balancer
-resource "aws_lb" "k8s-external-nlb" {
-  name     = "k8s-external-nlb"
+resource "aws_lb" "k8s-cluster-from-ground-up" {
+  name     = "k8s-cluster-from-ground-up"
   load_balancer_type = "network"
   internal = false
 #   security_groups = [aws_security_group.k8s-sg.id]
@@ -39,7 +39,7 @@ resource "aws_lb_target_group_attachment" "k8s-lb-tg" {
 
 # Create Listener for Target Group
 resource "aws_lb_listener" "k8s-listener" {
-  load_balancer_arn = aws_lb.k8s-external-nlb.arn
+  load_balancer_arn = aws_lb.k8s-cluster-from-ground-up.arn
   port              = 6443
   protocol          = "TCP"
 

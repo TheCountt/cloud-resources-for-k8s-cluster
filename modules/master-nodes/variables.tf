@@ -1,3 +1,4 @@
+
 variable "region" {}
 
 variable "subnet" {}
@@ -11,8 +12,6 @@ variable "k8s-sg" {}
 variable "private_ip" {
     default = ["master_ip_list"]
 }
-
-# variable "tags" {}
 
 variable "key_name" {
     type = string

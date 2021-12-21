@@ -24,15 +24,10 @@ module "master-nodes" {
   source        = "./modules/master-nodes"
   region        = var.region
   subnet        = module.network.subnets
-  # count         = 3
   instance_type = var.instance_type
   ami           = var.ami
   k8s-sg        = module.network.security-group
-  # private_ip    = element(var.master_ip_list, count.index)
 
-  # tags = {
-  #   Name = "master-${count.index}"
-  # }
 }
 
 # the module creates worker-nodes
@@ -40,15 +35,9 @@ module "worker-nodes" {
   source        = "./modules/worker-nodes"
   region        = var.region
   subnet        = module.network.subnets
-  count         = 3
   instance_type = var.instance_type
   ami           = var.ami
   k8s-sg        = module.network.security-group
-  private_ip    = element(var.worker_ip_list, count.index)
-
-  tags = {
-    Name = "worker-${count.index}"
-  }
 }
 
 # the module creates network load-balancer

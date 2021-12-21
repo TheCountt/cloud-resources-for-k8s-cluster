@@ -187,7 +187,7 @@ cfssl gencert \
 #### 5. kubelet Client Certificate and Private Key #####
 
 for i in 0 1 2; do
-  instance="worker-${i}"
+  instance="{{NAME}}-worker-${i}"
   instance_hostname="ip-172-31-0-2${i}"
   cat > ${instance}-csr.json <<EOF
 {
@@ -222,7 +222,7 @@ EOF
     -config=ca-config.json \
     -hostname=${instance_hostname},${external_ip},${internal_ip} \
     -profile=kubernetes \
-    worker-${i}-csr.json | cfssljson -bare worker-${i}
+    worker-${i}-csr.json | cfssljson -bare {{NAME}}-worker-${i}
 done
 
 #### 6. kubernetes admin user's Client Certificate and Private Key #######

@@ -1,6 +1,5 @@
 ---
-- hosts: tag_Name_master_0, tag_Name_master_1, tag_Name_master_2
-  gather_facts: true
+- hosts: tag_Name_k8s_cluster_from_ground_up_master_0
   become: true
   roles:
      - rbac

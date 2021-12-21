@@ -4,7 +4,7 @@ resource "aws_instance" "k8s-master" {
   subnet_id                   = var.subnet
   source_dest_check           = false
   count                       = var.number_of_master_nodes
-  private_ip    = element(var.master_ip_list, count.index)
+  private_ip                  = element(var.master_ip_list, count.index)
   vpc_security_group_ids      = [var.k8s-sg]
 #   private_ip                  = var.private_ip
   associate_public_ip_address = true
@@ -26,7 +26,7 @@ resource "aws_instance" "k8s-master" {
    }
 
    tags = {
-    Name = "master-${count.index}"
+    Name = "-k8s-cluster-from-ground-up-master-${count.index}"
   }
 }
 
