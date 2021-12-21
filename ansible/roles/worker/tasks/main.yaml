@@ -171,3 +171,6 @@
         - containerd
         - kubelet
         - kube-proxy
+
+    - name: Get nodes
+      ansible.builtin.command: kubectl get nodes --kubeconfig /var/lib/kubernetes/admin.kubeconfig -o wide
