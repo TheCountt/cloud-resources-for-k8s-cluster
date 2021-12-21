@@ -26,12 +26,9 @@ resource "aws_instance" "k8s-master" {
    }
 
    tags = {
-<<<<<<< HEAD
     Name = "-k8s-cluster-from-ground-up-master-${count.index}"
-=======
-    Name = "k8s-cluster-from-ground-up-master-${count.index}"
->>>>>>> 1247700f0a4c2dee04f3fb5c245b0a7442ed8c1e
-  }
+   }
+
 }
 
 
