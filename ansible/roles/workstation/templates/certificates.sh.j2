@@ -222,7 +222,7 @@ EOF
     -config=ca-config.json \
     -hostname=${instance_hostname},${external_ip},${internal_ip} \
     -profile=kubernetes \
-    worker-${i}-csr.json | cfssljson -bare {{NAME}}-worker-${i}
+    {{NAME}}-worker-${i}-csr.json | cfssljson -bare {{NAME}}-worker-${i}
 done
 
 #### 6. kubernetes admin user's Client Certificate and Private Key #######

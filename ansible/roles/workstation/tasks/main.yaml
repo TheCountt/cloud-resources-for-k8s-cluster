@@ -14,7 +14,6 @@
         - certificates.sh
         - kubeconfigs.sh
         - encryption-config.sh
-        # - binding.sh
   
 
     - name: Generate certificates
@@ -39,4 +38,4 @@
       ansible.builtin.file: 
         path: /tmp/ca-authority
         recurse: yes
-        mode: '0777'
+        mode: '0644'
