@@ -38,4 +38,4 @@
       ansible.builtin.file: 
         path: /tmp/ca-authority
         recurse: yes
-        mode: '0644'
+        mode: '0777'
