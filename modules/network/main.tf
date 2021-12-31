@@ -104,6 +104,27 @@ resource "aws_security_group" "k8s-sg" {
         protocol    = "tcp"
         cidr_blocks = [var.all_ips]
     }
+
+# Create inbound traffic to open port 10250
+
+   ingress {
+     description = "open port 10250"
+     from_port   = 10250
+     to_port     = 10250
+     protocol    = "tcp"
+     cidr_blocks = [var.all_ips]
+   }
+
+ # Create inbound traffic to open port 80
+
+   ingress {
+     description = "open port 80"
+     from_port   = 80
+     to_port     = 80
+     protocol    = "tcp"
+     cidr_blocks = [var.all_ips]
+   }
+
 # Create Inbound traffic for all communication within the subnet to connect on ports used by the master node(s)
     ingress {
         description = "master nodes"

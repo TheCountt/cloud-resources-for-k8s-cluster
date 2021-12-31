@@ -1,5 +1,6 @@
 ---
 instance: "k8s-cluster-from-ground-up-worker-{{ ansible_eth0.ipv4.address[-1] }}"
-name: "k8s-cluster-from-ground-up"
+name_cluster: "k8s-cluster-from-ground-up"
 worker_name: "k8s-cluster-from-ground-up-worker-{{ ansible_eth0.ipv4.address[-1] }}"
 pod_cidr: "172.20.{{ ansible_eth0.ipv4.address[-1] }}.0/24"
+kubernetes_api_server_address: k8s-cluster-from-ground-up-a5ab7ae7cabdca57.elb.us-west-2.amazonaws.com
