@@ -7,30 +7,30 @@
 
     - name: Copy to ca-authority directory
       template:
-        src: "./templates/{{ item }}"
+        src: "./templates/{{ item }}.j2"
         dest: "/tmp/ca-authority/{{ item }}"
         mode: +rwx
       loop:
-        - certificates.sh.j2
-        - kubeconfigs.sh.j2
-        - encryption-config.sh.j2
-        - kubeconfig-server
+        - certificates.sh
+        - kubeconfigs.sh
+        - encryption-config.sh
+        - kubeconfig-server.sh
   
 
     - name: Generate certificates
-      ansible.builtin.shell: ./certificates.sh.j2
+      ansible.builtin.shell: ./certificates.sh
       args:
         chdir: /tmp/ca-authority
         creates: service-account-csr.json
 
     - name: Generate kubeconfig files
-      ansible.builtin.shell: ./kubeconfigs.sh.j2
+      ansible.builtin.shell: ./kubeconfigs.sh
       args:
         chdir: /tmp/ca-authority
         creates: admin.kubeconfig
 
     - name: Generate encryption.yaml
-      ansible.builtin.shell: ./encryption-config.sh.j2
+      ansible.builtin.shell: ./encryption-config.sh
       args:
         chdir: /tmp/ca-authority
         creates: encryption-config.yaml
@@ -42,6 +42,6 @@
         mode: '0777'
 
     - name: Set context for remote access
-      ansible.builtin.shell: ./kubeconfig-server
+      ansible.builtin.shell: ./kubeconfig-server.sh
       args:
         chdir: /tmp/ca-authority

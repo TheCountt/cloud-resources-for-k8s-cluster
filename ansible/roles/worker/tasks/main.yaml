@@ -170,3 +170,11 @@
         - containerd
         - kubelet
         - kube-proxy
+
+    - name: Distribute admin kubeconfig files
+      copy:
+        src: "/tmp/ca-authority/admin.kubeconfig"
+        dest: "/var/lib/kubernetes/"
+        remote_src: no
+
+ 
