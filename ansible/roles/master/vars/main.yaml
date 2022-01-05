@@ -2,4 +2,4 @@
 internal_ip: "{{ ansible_eth0.ipv4.address }}"
 etcd_name: "master-{{ ansible_eth0.ipv4.address[-1] }}"
 name_cluster: "k8s-cluster-from-ground-up"
-vpc_cidr: "172.31.0.0/16"
+vpc_cidr: "192.168.5.0/24"

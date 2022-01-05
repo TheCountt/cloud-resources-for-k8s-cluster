@@ -14,7 +14,7 @@ ExecStart=/usr/local/bin/etcd \
   --listen-client-urls https://{{internal_ip}}:2379,https://127.0.0.1:2379 \
   --advertise-client-urls https://{{internal_ip}}:2379 \
   --initial-cluster-token etcd-cluster-0 \
-  --initial-cluster master-0=https://172.31.0.10:2380,master-1=https://172.31.0.11:2380,master-2=https://172.31.0.12:2380 \
+  --initial-cluster master-0=https://192.168.5.10:2380,master-1=https://192.168.5.11:2380,master-2=https://192.168.5.12:2380 \
   --cert-file=/etc/etcd/master-kubernetes.pem \
   --key-file=/etc/etcd/master-kubernetes-key.pem \
   --peer-cert-file=/etc/etcd/master-kubernetes.pem \
