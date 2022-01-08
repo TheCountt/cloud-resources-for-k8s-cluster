@@ -4,6 +4,8 @@ variable "vpc_cidr" {}
 
 variable "subnet_cidr" {}
 
+variable "service_cidr" {}
+
 variable "all_ips" {}
 
 variable "enable_dns_support" {}

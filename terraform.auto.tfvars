@@ -4,6 +4,8 @@ vpc_cidr = "172.31.0.0/16"
 
 subnet_cidr = "172.31.0.0/24"
 
+service_cidr = "172.32.0.0/24"
+
 all_ips = "0.0.0.0/0"
 
 enable_dns_support = "true"

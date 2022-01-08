@@ -7,6 +7,7 @@ resource "aws_instance" "k8s-worker" {
   private_ip                  = element(var.worker_ip_list, count.index)
   vpc_security_group_ids      = [var.k8s-sg]
   associate_public_ip_address = true
+#  user_data                   = filebase64("~/k8s-cluster-from-ground-up/modules/worker-nodes/worker.sh")
   key_name                    = "k8s-cluster-from-ground-up"
 
   root_block_device {

@@ -43,6 +43,20 @@ resource "aws_subnet" "k8s-subnet" {
   }
 }
 
+
+####### add additional cidr ranges to the vpc
+
+# resource "aws_vpc_ipv4_cidr_block_association" "pod_cidr" {
+#   vpc_id = aws_vpc.k8s-vpc.id
+#   cidr_block = "172.20.0.0/24"
+# }
+
+resource "aws_vpc_ipv4_cidr_block_association" "service_cidr" {
+  vpc_id = aws_vpc.k8s-vpc.id
+  cidr_block = var.service_cidr
+}
+
+
 # create internet gateway and attach to vpc
 resource "aws_internet_gateway" "k8s-ig" {
   vpc_id = aws_vpc.k8s-vpc.id
@@ -51,7 +65,8 @@ resource "aws_internet_gateway" "k8s-ig" {
   }
 }
 
-# create route table and create route
+
+# create route table
 resource "aws_route_table" "k8s-rtb" {
   vpc_id = aws_vpc.k8s-vpc.id
   
@@ -65,11 +80,15 @@ resource "aws_route_table" "k8s-rtb" {
   }
 }
 
+
 # associate subnet to the route table
 resource "aws_route_table_association" "k8s-association" {
   subnet_id      = aws_subnet.k8s-subnet.id
   route_table_id = aws_route_table.k8s-rtb.id
 }
+
+/////////////////////////////////////////////////////////////////////////
+
 
 ////////////////////////  SECURITY GROUPS ////////////////////////
 
@@ -105,7 +124,7 @@ resource "aws_security_group" "k8s-sg" {
         cidr_blocks = [var.all_ips]
     }
 
-# Create inbound traffic to open port 10250
+# Create inbound traffic to port 10250
 
    ingress {
      description = "open port 10250"
@@ -115,7 +134,7 @@ resource "aws_security_group" "k8s-sg" {
      cidr_blocks = [var.all_ips]
    }
 
- # Create inbound traffic to open port 80
+ # Create inbound traffic to port 80
 
    ingress {
      description = "open port 80"
@@ -132,6 +151,7 @@ resource "aws_security_group" "k8s-sg" {
         to_port     = 2380
         protocol    = "tcp"
         cidr_blocks = [var.subnet_cidr]
+        #cidr_blocks = [var.all_ips]
     }
 
 # Create Inbound traffic for all communication within the subnet to connect on ports used by the worker nodes
@@ -141,7 +161,26 @@ resource "aws_security_group" "k8s-sg" {
         to_port     = 32767
         protocol    = "tcp"
         cidr_blocks = [var.subnet_cidr]
+        #cidr_blocks = [var.all_ips]
     }
+
+# # Just checking
+#     ingress {
+#       description = "service"
+#       from_port = 0
+#       to_port = 0
+#       protocol = "-1"
+#       cidr_blocks = ["172.32.0.0/16"]
+#     }
+
+# # Just checking
+#     ingress {
+#       description = "all"
+#       from_port = 0
+#       to_port = 0
+#       protocol = "-1"
+#       cidr_blocks = [var.all_ips]
+#     }
 
     egress {
         from_port   = 0

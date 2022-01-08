@@ -8,6 +8,7 @@ resource "aws_instance" "k8s-master" {
   vpc_security_group_ids      = [var.k8s-sg]
 #   private_ip                  = var.private_ip
   associate_public_ip_address = true
+#  user_data                   = filebase64("~/k8s-cluster-from-ground-up/modules/master-nodes/master.sh")
   key_name                    = "k8s-cluster-from-ground-up"
   
   root_block_device {

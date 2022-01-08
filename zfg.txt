@@ -1,0 +1,921 @@
+[0m# module.worker-nodes.aws_instance.k8s-worker[0]:
+resource "aws_instance" "k8s-worker" {
+    [1m[0mami[0m[0m                                  = "ami-0477c9562acb01819"
+    [1m[0marn[0m[0m                                  = "arn:aws:ec2:us-west-2:305311085423:instance/i-00f1f61d6fcf90637"
+    [1m[0massociate_public_ip_address[0m[0m          = true
+    [1m[0mavailability_zone[0m[0m                    = "us-west-2c"
+    [1m[0mcpu_core_count[0m[0m                       = 1
+    [1m[0mcpu_threads_per_core[0m[0m                 = 1
+    [1m[0mdisable_api_termination[0m[0m              = false
+    [1m[0mebs_optimized[0m[0m                        = false
+    [1m[0mget_password_data[0m[0m                    = false
+    [1m[0mhibernation[0m[0m                          = false
+    [1m[0mid[0m[0m                                   = "i-00f1f61d6fcf90637"
+    [1m[0minstance_initiated_shutdown_behavior[0m[0m = "stop"
+    [1m[0minstance_state[0m[0m                       = "running"
+    [1m[0minstance_type[0m[0m                        = "t2.micro"
+    [1m[0mipv6_address_count[0m[0m                   = 0
+    [1m[0mipv6_addresses[0m[0m                       = []
+    [1m[0mkey_name[0m[0m                             = "k8s-cluster-from-ground-up"
+    [1m[0mmonitoring[0m[0m                           = false
+    [1m[0mprimary_network_interface_id[0m[0m         = "eni-05cace6c3eb8e58be"
+    [1m[0mprivate_dns[0m[0m                          = "ip-172-31-0-20.us-west-2.compute.internal"
+    [1m[0mprivate_ip[0m[0m                           = "172.31.0.20"
+    [1m[0mpublic_dns[0m[0m                           = "ec2-54-202-193-16.us-west-2.compute.amazonaws.com"
+    [1m[0mpublic_ip[0m[0m                            = "54.202.193.16"
+    [1m[0msecondary_private_ips[0m[0m                = []
+    [1m[0msecurity_groups[0m[0m                      = []
+    [1m[0msource_dest_check[0m[0m                    = false
+    [1m[0msubnet_id[0m[0m                            = "subnet-0ef674d7763749099"
+    [1m[0mtags[0m[0m                                 = {
+        "Name" = "k8s-cluster-from-ground-up-worker-0"
+    }
+    [1m[0mtags_all[0m[0m                             = {
+        "Name" = "k8s-cluster-from-ground-up-worker-0"
+    }
+    [1m[0mtenancy[0m[0m                              = "default"
+    [1m[0mvpc_security_group_ids[0m[0m               = [
+        "sg-06b15531a878173f4",
+    ]
+
+    capacity_reservation_specification {
+        [1m[0mcapacity_reservation_preference[0m[0m = "open"
+    }
+
+    credit_specification {
+        [1m[0mcpu_credits[0m[0m = "standard"
+    }
+
+    enclave_options {
+        [1m[0menabled[0m[0m = false
+    }
+
+    metadata_options {
+        [1m[0mhttp_endpoint[0m[0m               = "enabled"
+        [1m[0mhttp_put_response_hop_limit[0m[0m = 1
+        [1m[0mhttp_tokens[0m[0m                 = "optional"
+    }
+
+    root_block_device {
+        [1m[0mdelete_on_termination[0m[0m = true
+        [1m[0mdevice_name[0m[0m           = "/dev/sda1"
+        [1m[0mencrypted[0m[0m             = false
+        [1m[0miops[0m[0m                  = 3000
+        [1m[0mthroughput[0m[0m            = 125
+        [1m[0mvolume_id[0m[0m             = "vol-0ef0f3171b9a4f9ce"
+        [1m[0mvolume_size[0m[0m           = 8
+        [1m[0mvolume_type[0m[0m           = "gp3"
+    }
+}
+
+# module.worker-nodes.aws_instance.k8s-worker[1]:
+resource "aws_instance" "k8s-worker" {
+    [1m[0mami[0m[0m                                  = "ami-0477c9562acb01819"
+    [1m[0marn[0m[0m                                  = "arn:aws:ec2:us-west-2:305311085423:instance/i-0b70bfa7bab01c4b2"
+    [1m[0massociate_public_ip_address[0m[0m          = true
+    [1m[0mavailability_zone[0m[0m                    = "us-west-2c"
+    [1m[0mcpu_core_count[0m[0m                       = 1
+    [1m[0mcpu_threads_per_core[0m[0m                 = 1
+    [1m[0mdisable_api_termination[0m[0m              = false
+    [1m[0mebs_optimized[0m[0m                        = false
+    [1m[0mget_password_data[0m[0m                    = false
+    [1m[0mhibernation[0m[0m                          = false
+    [1m[0mid[0m[0m                                   = "i-0b70bfa7bab01c4b2"
+    [1m[0minstance_initiated_shutdown_behavior[0m[0m = "stop"
+    [1m[0minstance_state[0m[0m                       = "running"
+    [1m[0minstance_type[0m[0m                        = "t2.micro"
+    [1m[0mipv6_address_count[0m[0m                   = 0
+    [1m[0mipv6_addresses[0m[0m                       = []
+    [1m[0mkey_name[0m[0m                             = "k8s-cluster-from-ground-up"
+    [1m[0mmonitoring[0m[0m                           = false
+    [1m[0mprimary_network_interface_id[0m[0m         = "eni-01e13459f0d556ede"
+    [1m[0mprivate_dns[0m[0m                          = "ip-172-31-0-21.us-west-2.compute.internal"
+    [1m[0mprivate_ip[0m[0m                           = "172.31.0.21"
+    [1m[0mpublic_dns[0m[0m                           = "ec2-35-160-20-2.us-west-2.compute.amazonaws.com"
+    [1m[0mpublic_ip[0m[0m                            = "35.160.20.2"
+    [1m[0msecondary_private_ips[0m[0m                = []
+    [1m[0msecurity_groups[0m[0m                      = []
+    [1m[0msource_dest_check[0m[0m                    = false
+    [1m[0msubnet_id[0m[0m                            = "subnet-0ef674d7763749099"
+    [1m[0mtags[0m[0m                                 = {
+        "Name" = "k8s-cluster-from-ground-up-worker-1"
+    }
+    [1m[0mtags_all[0m[0m                             = {
+        "Name" = "k8s-cluster-from-ground-up-worker-1"
+    }
+    [1m[0mtenancy[0m[0m                              = "default"
+    [1m[0mvpc_security_group_ids[0m[0m               = [
+        "sg-06b15531a878173f4",
+    ]
+
+    capacity_reservation_specification {
+        [1m[0mcapacity_reservation_preference[0m[0m = "open"
+    }
+
+    credit_specification {
+        [1m[0mcpu_credits[0m[0m = "standard"
+    }
+
+    enclave_options {
+        [1m[0menabled[0m[0m = false
+    }
+
+    metadata_options {
+        [1m[0mhttp_endpoint[0m[0m               = "enabled"
+        [1m[0mhttp_put_response_hop_limit[0m[0m = 1
+        [1m[0mhttp_tokens[0m[0m                 = "optional"
+    }
+
+    root_block_device {
+        [1m[0mdelete_on_termination[0m[0m = true
+        [1m[0mdevice_name[0m[0m           = "/dev/sda1"
+        [1m[0mencrypted[0m[0m             = false
+        [1m[0miops[0m[0m                  = 3000
+        [1m[0mthroughput[0m[0m            = 125
+        [1m[0mvolume_id[0m[0m             = "vol-05303c3973a118c21"
+        [1m[0mvolume_size[0m[0m           = 8
+        [1m[0mvolume_type[0m[0m           = "gp3"
+    }
+}
+
+# module.worker-nodes.aws_instance.k8s-worker[2]:
+resource "aws_instance" "k8s-worker" {
+    [1m[0mami[0m[0m                                  = "ami-0477c9562acb01819"
+    [1m[0marn[0m[0m                                  = "arn:aws:ec2:us-west-2:305311085423:instance/i-07cc47c51e6e7d839"
+    [1m[0massociate_public_ip_address[0m[0m          = true
+    [1m[0mavailability_zone[0m[0m                    = "us-west-2c"
+    [1m[0mcpu_core_count[0m[0m                       = 1
+    [1m[0mcpu_threads_per_core[0m[0m                 = 1
+    [1m[0mdisable_api_termination[0m[0m              = false
+    [1m[0mebs_optimized[0m[0m                        = false
+    [1m[0mget_password_data[0m[0m                    = false
+    [1m[0mhibernation[0m[0m                          = false
+    [1m[0mid[0m[0m                                   = "i-07cc47c51e6e7d839"
+    [1m[0minstance_initiated_shutdown_behavior[0m[0m = "stop"
+    [1m[0minstance_state[0m[0m                       = "running"
+    [1m[0minstance_type[0m[0m                        = "t2.micro"
+    [1m[0mipv6_address_count[0m[0m                   = 0
+    [1m[0mipv6_addresses[0m[0m                       = []
+    [1m[0mkey_name[0m[0m                             = "k8s-cluster-from-ground-up"
+    [1m[0mmonitoring[0m[0m                           = false
+    [1m[0mprimary_network_interface_id[0m[0m         = "eni-050f3cdcbb14e29d3"
+    [1m[0mprivate_dns[0m[0m                          = "ip-172-31-0-22.us-west-2.compute.internal"
+    [1m[0mprivate_ip[0m[0m                           = "172.31.0.22"
+    [1m[0mpublic_dns[0m[0m                           = "ec2-52-43-56-177.us-west-2.compute.amazonaws.com"
+    [1m[0mpublic_ip[0m[0m                            = "52.43.56.177"
+    [1m[0msecondary_private_ips[0m[0m                = []
+    [1m[0msecurity_groups[0m[0m                      = []
+    [1m[0msource_dest_check[0m[0m                    = false
+    [1m[0msubnet_id[0m[0m                            = "subnet-0ef674d7763749099"
+    [1m[0mtags[0m[0m                                 = {
+        "Name" = "k8s-cluster-from-ground-up-worker-2"
+    }
+    [1m[0mtags_all[0m[0m                             = {
+        "Name" = "k8s-cluster-from-ground-up-worker-2"
+    }
+    [1m[0mtenancy[0m[0m                              = "default"
+    [1m[0mvpc_security_group_ids[0m[0m               = [
+        "sg-06b15531a878173f4",
+    ]
+
+    capacity_reservation_specification {
+        [1m[0mcapacity_reservation_preference[0m[0m = "open"
+    }
+
+    credit_specification {
+        [1m[0mcpu_credits[0m[0m = "standard"
+    }
+
+    enclave_options {
+        [1m[0menabled[0m[0m = false
+    }
+
+    metadata_options {
+        [1m[0mhttp_endpoint[0m[0m               = "enabled"
+        [1m[0mhttp_put_response_hop_limit[0m[0m = 1
+        [1m[0mhttp_tokens[0m[0m                 = "optional"
+    }
+
+    root_block_device {
+        [1m[0mdelete_on_termination[0m[0m = true
+        [1m[0mdevice_name[0m[0m           = "/dev/sda1"
+        [1m[0mencrypted[0m[0m             = false
+        [1m[0miops[0m[0m                  = 3000
+        [1m[0mthroughput[0m[0m            = 125
+        [1m[0mvolume_id[0m[0m             = "vol-0cdf031a988016156"
+        [1m[0mvolume_size[0m[0m           = 8
+        [1m[0mvolume_type[0m[0m           = "gp3"
+    }
+}
+
+
+# data.aws_availability_zones.available:
+data "aws_availability_zones" "available" {
+    [1m[0mgroup_names[0m[0m = [
+        "us-west-2",
+    ]
+    [1m[0mid[0m[0m          = "us-west-2"
+    [1m[0mnames[0m[0m       = [
+        "us-west-2a",
+        "us-west-2b",
+        "us-west-2c",
+        "us-west-2d",
+    ]
+    [1m[0mstate[0m[0m       = "available"
+    [1m[0mzone_ids[0m[0m    = [
+        "usw2-az2",
+        "usw2-az1",
+        "usw2-az3",
+        "usw2-az4",
+    ]
+}
+
+
+# module.keypair.aws_key_pair.k8s-ssh_key:
+resource "aws_key_pair" "k8s-ssh_key" {
+    [1m[0marn[0m[0m         = "arn:aws:ec2:us-west-2:305311085423:key-pair/k8s-cluster-from-ground-up"
+    [1m[0mfingerprint[0m[0m = "c2:d9:b7:98:11:64:86:6e:6f:81:f8:79:9d:02:65:a7"
+    [1m[0mid[0m[0m          = "k8s-cluster-from-ground-up"
+    [1m[0mkey_name[0m[0m    = "k8s-cluster-from-ground-up"
+    [1m[0mkey_pair_id[0m[0m = "key-0b272c238cd6a8fbb"
+    [1m[0mpublic_key[0m[0m  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCxDYRkPfDp6DfD/rHCMo4smsRELkK6dkoUlXKPBHS9Izh2i7OC6vmjaOVBsBZuox6b0jqrNTcCn46zJaCWCKCr48PfS5xIFDGSMrps+UUp4PGSePMeu9nrz+UH7xo5C3le7S/yjH7peaWAbQp29DsH0txoemE29XQ4wBhHN8LVVhHDUBnevZ1VbW1/PR+alZb187Bl7VQlmAojKE8Kc8rVuTcBaJbNp5g9pf05zNvJDO2xWbNRBH060Nsv2OBS5UegwcgHwM1roCK8fmDtp3sRoUj4sNS9ztYP/e/iZlGqM5OUj3NoZAYVHLjFXFzoKMrKli0J50Vl9BFtgkxCIr3PrKjUqKMc6CsIgyrX0A8UP132VZdR8mOwWestbnC7F3t9u2l2ZvBJ5pKnkxTLwLT0Oyv1eKqI7zqsUOrq66SmBWePq2yQYuC58Zygemg0kYGHxX4HGDW2XM0NBUDrcAjfJ75qaeNw9P/n4UK6ESj1OoYOd5f3RWI0CjbRGXxtPyk= thecountt@DESKTOP-KUH88AJ"
+    [1m[0mtags_all[0m[0m    = {}
+}
+
+
+# module.master-nodes.aws_instance.k8s-master[0]:
+resource "aws_instance" "k8s-master" {
+    [1m[0mami[0m[0m                                  = "ami-0477c9562acb01819"
+    [1m[0marn[0m[0m                                  = "arn:aws:ec2:us-west-2:305311085423:instance/i-00bfc6a35eb28c4a7"
+    [1m[0massociate_public_ip_address[0m[0m          = true
+    [1m[0mavailability_zone[0m[0m                    = "us-west-2c"
+    [1m[0mcpu_core_count[0m[0m                       = 1
+    [1m[0mcpu_threads_per_core[0m[0m                 = 1
+    [1m[0mdisable_api_termination[0m[0m              = false
+    [1m[0mebs_optimized[0m[0m                        = false
+    [1m[0mget_password_data[0m[0m                    = false
+    [1m[0mhibernation[0m[0m                          = false
+    [1m[0mid[0m[0m                                   = "i-00bfc6a35eb28c4a7"
+    [1m[0minstance_initiated_shutdown_behavior[0m[0m = "stop"
+    [1m[0minstance_state[0m[0m                       = "running"
+    [1m[0minstance_type[0m[0m                        = "t2.micro"
+    [1m[0mipv6_address_count[0m[0m                   = 0
+    [1m[0mipv6_addresses[0m[0m                       = []
+    [1m[0mkey_name[0m[0m                             = "k8s-cluster-from-ground-up"
+    [1m[0mmonitoring[0m[0m                           = false
+    [1m[0mprimary_network_interface_id[0m[0m         = "eni-0747531d2a896fea4"
+    [1m[0mprivate_dns[0m[0m                          = "ip-172-31-0-10.us-west-2.compute.internal"
+    [1m[0mprivate_ip[0m[0m                           = "172.31.0.10"
+    [1m[0mpublic_dns[0m[0m                           = "ec2-54-245-145-28.us-west-2.compute.amazonaws.com"
+    [1m[0mpublic_ip[0m[0m                            = "54.245.145.28"
+    [1m[0msecondary_private_ips[0m[0m                = []
+    [1m[0msecurity_groups[0m[0m                      = []
+    [1m[0msource_dest_check[0m[0m                    = false
+    [1m[0msubnet_id[0m[0m                            = "subnet-0ef674d7763749099"
+    [1m[0mtags[0m[0m                                 = {
+        "Name" = "k8s-cluster-from-ground-up-master-0"
+    }
+    [1m[0mtags_all[0m[0m                             = {
+        "Name" = "k8s-cluster-from-ground-up-master-0"
+    }
+    [1m[0mtenancy[0m[0m                              = "default"
+    [1m[0mvpc_security_group_ids[0m[0m               = [
+        "sg-06b15531a878173f4",
+    ]
+
+    capacity_reservation_specification {
+        [1m[0mcapacity_reservation_preference[0m[0m = "open"
+    }
+
+    credit_specification {
+        [1m[0mcpu_credits[0m[0m = "standard"
+    }
+
+    enclave_options {
+        [1m[0menabled[0m[0m = false
+    }
+
+    metadata_options {
+        [1m[0mhttp_endpoint[0m[0m               = "enabled"
+        [1m[0mhttp_put_response_hop_limit[0m[0m = 1
+        [1m[0mhttp_tokens[0m[0m                 = "optional"
+    }
+
+    root_block_device {
+        [1m[0mdelete_on_termination[0m[0m = true
+        [1m[0mdevice_name[0m[0m           = "/dev/sda1"
+        [1m[0mencrypted[0m[0m             = false
+        [1m[0miops[0m[0m                  = 3000
+        [1m[0mthroughput[0m[0m            = 125
+        [1m[0mvolume_id[0m[0m             = "vol-036ffbfc03cabb0a9"
+        [1m[0mvolume_size[0m[0m           = 8
+        [1m[0mvolume_type[0m[0m           = "gp3"
+    }
+}
+
+# module.master-nodes.aws_instance.k8s-master[1]:
+resource "aws_instance" "k8s-master" {
+    [1m[0mami[0m[0m                                  = "ami-0477c9562acb01819"
+    [1m[0marn[0m[0m                                  = "arn:aws:ec2:us-west-2:305311085423:instance/i-03097678f4c978c60"
+    [1m[0massociate_public_ip_address[0m[0m          = true
+    [1m[0mavailability_zone[0m[0m                    = "us-west-2c"
+    [1m[0mcpu_core_count[0m[0m                       = 1
+    [1m[0mcpu_threads_per_core[0m[0m                 = 1
+    [1m[0mdisable_api_termination[0m[0m              = false
+    [1m[0mebs_optimized[0m[0m                        = false
+    [1m[0mget_password_data[0m[0m                    = false
+    [1m[0mhibernation[0m[0m                          = false
+    [1m[0mid[0m[0m                                   = "i-03097678f4c978c60"
+    [1m[0minstance_initiated_shutdown_behavior[0m[0m = "stop"
+    [1m[0minstance_state[0m[0m                       = "running"
+    [1m[0minstance_type[0m[0m                        = "t2.micro"
+    [1m[0mipv6_address_count[0m[0m                   = 0
+    [1m[0mipv6_addresses[0m[0m                       = []
+    [1m[0mkey_name[0m[0m                             = "k8s-cluster-from-ground-up"
+    [1m[0mmonitoring[0m[0m                           = false
+    [1m[0mprimary_network_interface_id[0m[0m         = "eni-0ecee259a61aeb25d"
+    [1m[0mprivate_dns[0m[0m                          = "ip-172-31-0-11.us-west-2.compute.internal"
+    [1m[0mprivate_ip[0m[0m                           = "172.31.0.11"
+    [1m[0mpublic_dns[0m[0m                           = "ec2-54-184-168-213.us-west-2.compute.amazonaws.com"
+    [1m[0mpublic_ip[0m[0m                            = "54.184.168.213"
+    [1m[0msecondary_private_ips[0m[0m                = []
+    [1m[0msecurity_groups[0m[0m                      = []
+    [1m[0msource_dest_check[0m[0m                    = false
+    [1m[0msubnet_id[0m[0m                            = "subnet-0ef674d7763749099"
+    [1m[0mtags[0m[0m                                 = {
+        "Name" = "k8s-cluster-from-ground-up-master-1"
+    }
+    [1m[0mtags_all[0m[0m                             = {
+        "Name" = "k8s-cluster-from-ground-up-master-1"
+    }
+    [1m[0mtenancy[0m[0m                              = "default"
+    [1m[0mvpc_security_group_ids[0m[0m               = [
+        "sg-06b15531a878173f4",
+    ]
+
+    capacity_reservation_specification {
+        [1m[0mcapacity_reservation_preference[0m[0m = "open"
+    }
+
+    credit_specification {
+        [1m[0mcpu_credits[0m[0m = "standard"
+    }
+
+    enclave_options {
+        [1m[0menabled[0m[0m = false
+    }
+
+    metadata_options {
+        [1m[0mhttp_endpoint[0m[0m               = "enabled"
+        [1m[0mhttp_put_response_hop_limit[0m[0m = 1
+        [1m[0mhttp_tokens[0m[0m                 = "optional"
+    }
+
+    root_block_device {
+        [1m[0mdelete_on_termination[0m[0m = true
+        [1m[0mdevice_name[0m[0m           = "/dev/sda1"
+        [1m[0mencrypted[0m[0m             = false
+        [1m[0miops[0m[0m                  = 3000
+        [1m[0mthroughput[0m[0m            = 125
+        [1m[0mvolume_id[0m[0m             = "vol-092d7e273a1987dd8"
+        [1m[0mvolume_size[0m[0m           = 8
+        [1m[0mvolume_type[0m[0m           = "gp3"
+    }
+}
+
+# module.master-nodes.aws_instance.k8s-master[2]:
+resource "aws_instance" "k8s-master" {
+    [1m[0mami[0m[0m                                  = "ami-0477c9562acb01819"
+    [1m[0marn[0m[0m                                  = "arn:aws:ec2:us-west-2:305311085423:instance/i-031baffe9a3f2ef73"
+    [1m[0massociate_public_ip_address[0m[0m          = true
+    [1m[0mavailability_zone[0m[0m                    = "us-west-2c"
+    [1m[0mcpu_core_count[0m[0m                       = 1
+    [1m[0mcpu_threads_per_core[0m[0m                 = 1
+    [1m[0mdisable_api_termination[0m[0m              = false
+    [1m[0mebs_optimized[0m[0m                        = false
+    [1m[0mget_password_data[0m[0m                    = false
+    [1m[0mhibernation[0m[0m                          = false
+    [1m[0mid[0m[0m                                   = "i-031baffe9a3f2ef73"
+    [1m[0minstance_initiated_shutdown_behavior[0m[0m = "stop"
+    [1m[0minstance_state[0m[0m                       = "running"
+    [1m[0minstance_type[0m[0m                        = "t2.micro"
+    [1m[0mipv6_address_count[0m[0m                   = 0
+    [1m[0mipv6_addresses[0m[0m                       = []
+    [1m[0mkey_name[0m[0m                             = "k8s-cluster-from-ground-up"
+    [1m[0mmonitoring[0m[0m                           = false
+    [1m[0mprimary_network_interface_id[0m[0m         = "eni-06e6447ee8b7b3466"
+    [1m[0mprivate_dns[0m[0m                          = "ip-172-31-0-12.us-west-2.compute.internal"
+    [1m[0mprivate_ip[0m[0m                           = "172.31.0.12"
+    [1m[0mpublic_dns[0m[0m                           = "ec2-35-89-37-170.us-west-2.compute.amazonaws.com"
+    [1m[0mpublic_ip[0m[0m                            = "35.89.37.170"
+    [1m[0msecondary_private_ips[0m[0m                = []
+    [1m[0msecurity_groups[0m[0m                      = []
+    [1m[0msource_dest_check[0m[0m                    = false
+    [1m[0msubnet_id[0m[0m                            = "subnet-0ef674d7763749099"
+    [1m[0mtags[0m[0m                                 = {
+        "Name" = "k8s-cluster-from-ground-up-master-2"
+    }
+    [1m[0mtags_all[0m[0m                             = {
+        "Name" = "k8s-cluster-from-ground-up-master-2"
+    }
+    [1m[0mtenancy[0m[0m                              = "default"
+    [1m[0mvpc_security_group_ids[0m[0m               = [
+        "sg-06b15531a878173f4",
+    ]
+
+    capacity_reservation_specification {
+        [1m[0mcapacity_reservation_preference[0m[0m = "open"
+    }
+
+    credit_specification {
+        [1m[0mcpu_credits[0m[0m = "standard"
+    }
+
+    enclave_options {
+        [1m[0menabled[0m[0m = false
+    }
+
+    metadata_options {
+        [1m[0mhttp_endpoint[0m[0m               = "enabled"
+        [1m[0mhttp_put_response_hop_limit[0m[0m = 1
+        [1m[0mhttp_tokens[0m[0m                 = "optional"
+    }
+
+    root_block_device {
+        [1m[0mdelete_on_termination[0m[0m = true
+        [1m[0mdevice_name[0m[0m           = "/dev/sda1"
+        [1m[0mencrypted[0m[0m             = false
+        [1m[0miops[0m[0m                  = 3000
+        [1m[0mthroughput[0m[0m            = 125
+        [1m[0mvolume_id[0m[0m             = "vol-025807e8e400d3413"
+        [1m[0mvolume_size[0m[0m           = 8
+        [1m[0mvolume_type[0m[0m           = "gp3"
+    }
+}
+
+
+# module.network.aws_internet_gateway.k8s-ig:
+resource "aws_internet_gateway" "k8s-ig" {
+    [1m[0marn[0m[0m      = "arn:aws:ec2:us-west-2:305311085423:internet-gateway/igw-04770df058101f254"
+    [1m[0mid[0m[0m       = "igw-04770df058101f254"
+    [1m[0mowner_id[0m[0m = "305311085423"
+    [1m[0mtags[0m[0m     = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mtags_all[0m[0m = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mvpc_id[0m[0m   = "vpc-042ac33a278a43836"
+}
+
+# module.network.aws_route_table.k8s-rtb:
+resource "aws_route_table" "k8s-rtb" {
+    [1m[0marn[0m[0m              = "arn:aws:ec2:us-west-2:305311085423:route-table/rtb-0344857b768fbed19"
+    [1m[0mid[0m[0m               = "rtb-0344857b768fbed19"
+    [1m[0mowner_id[0m[0m         = "305311085423"
+    [1m[0mpropagating_vgws[0m[0m = []
+    [1m[0mroute[0m[0m            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "0.0.0.0/0"
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = "igw-04770df058101f254"
+            instance_id                = ""
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+    ]
+    [1m[0mtags[0m[0m             = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mtags_all[0m[0m         = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mvpc_id[0m[0m           = "vpc-042ac33a278a43836"
+}
+
+# module.network.aws_route_table_association.k8s-association:
+resource "aws_route_table_association" "k8s-association" {
+    [1m[0mid[0m[0m             = "rtbassoc-067729440ef9e8296"
+    [1m[0mroute_table_id[0m[0m = "rtb-0344857b768fbed19"
+    [1m[0msubnet_id[0m[0m      = "subnet-0ef674d7763749099"
+}
+
+# module.network.aws_security_group.k8s-sg:
+resource "aws_security_group" "k8s-sg" {
+    [1m[0marn[0m[0m                    = "arn:aws:ec2:us-west-2:305311085423:security-group/sg-06b15531a878173f4"
+    [1m[0mdescription[0m[0m            = "Creating Inbound Traffic"
+    [1m[0megress[0m[0m                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = ""
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    [1m[0mid[0m[0m                     = "sg-06b15531a878173f4"
+    [1m[0mingress[0m[0m                = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "ICMP"
+            from_port        = -1
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "icmp"
+            security_groups  = []
+            self             = false
+            to_port          = -1
+        },
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "SSH"
+            from_port        = 22
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 22
+        },
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "allow connections to K8s API server"
+            from_port        = 6443
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 6443
+        },
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "open port 10250"
+            from_port        = 10250
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 10250
+        },
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "open port 80"
+            from_port        = 80
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 80
+        },
+        {
+            cidr_blocks      = [
+                "172.31.0.0/24",
+            ]
+            description      = "master nodes"
+            from_port        = 2379
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 2380
+        },
+        {
+            cidr_blocks      = [
+                "172.31.0.0/24",
+            ]
+            description      = "worker nodes"
+            from_port        = 30000
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 32767
+        },
+    ]
+    [1m[0mname[0m[0m                   = "k8s-sg"
+    [1m[0mowner_id[0m[0m               = "305311085423"
+    [1m[0mrevoke_rules_on_delete[0m[0m = false
+    [1m[0mtags[0m[0m                   = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mtags_all[0m[0m               = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mvpc_id[0m[0m                 = "vpc-042ac33a278a43836"
+}
+
+# module.network.aws_subnet.k8s-subnet:
+resource "aws_subnet" "k8s-subnet" {
+    [1m[0marn[0m[0m                             = "arn:aws:ec2:us-west-2:305311085423:subnet/subnet-0ef674d7763749099"
+    [1m[0massign_ipv6_address_on_creation[0m[0m = false
+    [1m[0mavailability_zone[0m[0m               = "us-west-2c"
+    [1m[0mavailability_zone_id[0m[0m            = "usw2-az3"
+    [1m[0mcidr_block[0m[0m                      = "172.31.0.0/24"
+    [1m[0mid[0m[0m                              = "subnet-0ef674d7763749099"
+    [1m[0mmap_customer_owned_ip_on_launch[0m[0m = false
+    [1m[0mmap_public_ip_on_launch[0m[0m         = true
+    [1m[0mowner_id[0m[0m                        = "305311085423"
+    [1m[0mtags[0m[0m                            = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mtags_all[0m[0m                        = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mvpc_id[0m[0m                          = "vpc-042ac33a278a43836"
+}
+
+# module.network.aws_vpc.k8s-vpc:
+resource "aws_vpc" "k8s-vpc" {
+    [1m[0marn[0m[0m                              = "arn:aws:ec2:us-west-2:305311085423:vpc/vpc-042ac33a278a43836"
+    [1m[0massign_generated_ipv6_cidr_block[0m[0m = false
+    [1m[0mcidr_block[0m[0m                       = "172.31.0.0/16"
+    [1m[0mdefault_network_acl_id[0m[0m           = "acl-099ca09dc6c15a926"
+    [1m[0mdefault_route_table_id[0m[0m           = "rtb-08ac36d3ad1939686"
+    [1m[0mdefault_security_group_id[0m[0m        = "sg-078b1e485f650c7bb"
+    [1m[0mdhcp_options_id[0m[0m                  = "dopt-0eebc176"
+    [1m[0menable_classiclink[0m[0m               = false
+    [1m[0menable_classiclink_dns_support[0m[0m   = false
+    [1m[0menable_dns_hostnames[0m[0m             = true
+    [1m[0menable_dns_support[0m[0m               = true
+    [1m[0mid[0m[0m                               = "vpc-042ac33a278a43836"
+    [1m[0minstance_tenancy[0m[0m                 = "default"
+    [1m[0mmain_route_table_id[0m[0m              = "rtb-08ac36d3ad1939686"
+    [1m[0mowner_id[0m[0m                         = "305311085423"
+    [1m[0mtags[0m[0m                             = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mtags_all[0m[0m                         = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+}
+
+# module.network.aws_vpc_dhcp_options.k8s-dhcp-option:
+resource "aws_vpc_dhcp_options" "k8s-dhcp-option" {
+    [1m[0marn[0m[0m                 = "arn:aws:ec2:us-west-2:305311085423:dhcp-options/dopt-01b9e47ad2b7b23b6"
+    [1m[0mdomain_name[0m[0m         = "us-west-2.compute.internal"
+    [1m[0mdomain_name_servers[0m[0m = [
+        "AmazonProvidedDNS",
+    ]
+    [1m[0mid[0m[0m                  = "dopt-01b9e47ad2b7b23b6"
+    [1m[0mowner_id[0m[0m            = "305311085423"
+    [1m[0mtags[0m[0m                = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mtags_all[0m[0m            = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+}
+
+# module.network.aws_vpc_dhcp_options_association.k8s-dns_resolver:
+resource "aws_vpc_dhcp_options_association" "k8s-dns_resolver" {
+    [1m[0mdhcp_options_id[0m[0m = "dopt-01b9e47ad2b7b23b6"
+    [1m[0mid[0m[0m              = "dopt-01b9e47ad2b7b23b6-vpc-042ac33a278a43836"
+    [1m[0mvpc_id[0m[0m          = "vpc-042ac33a278a43836"
+}
+
+# module.network.aws_vpc_ipv4_cidr_block_association.service_cidr:
+resource "aws_vpc_ipv4_cidr_block_association" "service_cidr" {
+    [1m[0mcidr_block[0m[0m = "172.32.0.0/24"
+    [1m[0mid[0m[0m         = "vpc-cidr-assoc-09a9401d502ece6a7"
+    [1m[0mvpc_id[0m[0m     = "vpc-042ac33a278a43836"
+}
+
+# module.network.data.aws_availability_zones.available-zones:
+data "aws_availability_zones" "available-zones" {
+    [1m[0mgroup_names[0m[0m = [
+        "us-west-2",
+    ]
+    [1m[0mid[0m[0m          = "us-west-2"
+    [1m[0mnames[0m[0m       = [
+        "us-west-2a",
+        "us-west-2b",
+        "us-west-2c",
+        "us-west-2d",
+    ]
+    [1m[0mstate[0m[0m       = "available"
+    [1m[0mzone_ids[0m[0m    = [
+        "usw2-az2",
+        "usw2-az1",
+        "usw2-az3",
+        "usw2-az4",
+    ]
+}
+
+
+# module.network-lb.aws_lb.k8s-cluster-from-ground-up:
+resource "aws_lb" "k8s-cluster-from-ground-up" {
+    [1m[0marn[0m[0m                              = "arn:aws:elasticloadbalancing:us-west-2:305311085423:loadbalancer/net/k8s-cluster-from-ground-up/a6371326349dc898"
+    [1m[0marn_suffix[0m[0m                       = "net/k8s-cluster-from-ground-up/a6371326349dc898"
+    [1m[0mdns_name[0m[0m                         = "k8s-cluster-from-ground-up-a6371326349dc898.elb.us-west-2.amazonaws.com"
+    [1m[0menable_cross_zone_load_balancing[0m[0m = false
+    [1m[0menable_deletion_protection[0m[0m       = false
+    [1m[0mid[0m[0m                               = "arn:aws:elasticloadbalancing:us-west-2:305311085423:loadbalancer/net/k8s-cluster-from-ground-up/a6371326349dc898"
+    [1m[0minternal[0m[0m                         = false
+    [1m[0mip_address_type[0m[0m                  = "ipv4"
+    [1m[0mload_balancer_type[0m[0m               = "network"
+    [1m[0mname[0m[0m                             = "k8s-cluster-from-ground-up"
+    [1m[0msecurity_groups[0m[0m                  = []
+    [1m[0msubnets[0m[0m                          = [
+        "subnet-0ef674d7763749099",
+    ]
+    [1m[0mtags[0m[0m                             = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mtags_all[0m[0m                         = {
+        "Name" = "k8s-cluster-from-ground-up"
+    }
+    [1m[0mvpc_id[0m[0m                           = "vpc-042ac33a278a43836"
+    [1m[0mzone_id[0m[0m                          = "Z18D5FSROUN65G"
+
+    access_logs {
+        [1m[0menabled[0m[0m = false
+    }
+
+    subnet_mapping {
+        [1m[0msubnet_id[0m[0m = "subnet-0ef674d7763749099"
+    }
+}
+
+# module.network-lb.aws_lb_listener.k8s-listener:
+resource "aws_lb_listener" "k8s-listener" {
+    [1m[0marn[0m[0m               = "arn:aws:elasticloadbalancing:us-west-2:305311085423:listener/net/k8s-cluster-from-ground-up/a6371326349dc898/4af604270eb0bf54"
+    [1m[0mid[0m[0m                = "arn:aws:elasticloadbalancing:us-west-2:305311085423:listener/net/k8s-cluster-from-ground-up/a6371326349dc898/4af604270eb0bf54"
+    [1m[0mload_balancer_arn[0m[0m = "arn:aws:elasticloadbalancing:us-west-2:305311085423:loadbalancer/net/k8s-cluster-from-ground-up/a6371326349dc898"
+    [1m[0mport[0m[0m              = 6443
+    [1m[0mprotocol[0m[0m          = "TCP"
+    [1m[0mtags_all[0m[0m          = {}
+
+    default_action {
+        [1m[0morder[0m[0m            = 1
+        [1m[0mtarget_group_arn[0m[0m = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a"
+        [1m[0mtype[0m[0m             = "forward"
+    }
+}
+
+# module.network-lb.aws_lb_target_group.k8s-tg:
+resource "aws_lb_target_group" "k8s-tg" {
+    [1m[0marn[0m[0m                                = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a"
+    [1m[0marn_suffix[0m[0m                         = "targetgroup/k8s-tg/a4d025b90c33721a"
+    [1m[0mderegistration_delay[0m[0m               = "300"
+    [1m[0mid[0m[0m                                 = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a"
+    [1m[0mlambda_multi_value_headers_enabled[0m[0m = false
+    [1m[0mname[0m[0m                               = "k8s-tg"
+    [1m[0mport[0m[0m                               = 6443
+    [1m[0mpreserve_client_ip[0m[0m                 = "false"
+    [1m[0mprotocol[0m[0m                           = "TCP"
+    [1m[0mproxy_protocol_v2[0m[0m                  = false
+    [1m[0mslow_start[0m[0m                         = 0
+    [1m[0mtags_all[0m[0m                           = {}
+    [1m[0mtarget_type[0m[0m                        = "ip"
+    [1m[0mvpc_id[0m[0m                             = "vpc-042ac33a278a43836"
+
+    health_check {
+        [1m[0menabled[0m[0m             = true
+        [1m[0mhealthy_threshold[0m[0m   = 3
+        [1m[0minterval[0m[0m            = 30
+        [1m[0mport[0m[0m                = "6443"
+        [1m[0mprotocol[0m[0m            = "TCP"
+        [1m[0mtimeout[0m[0m             = 10
+        [1m[0munhealthy_threshold[0m[0m = 3
+    }
+
+    stickiness {
+        [1m[0mcookie_duration[0m[0m = 0
+        [1m[0menabled[0m[0m         = false
+        [1m[0mtype[0m[0m            = "source_ip"
+    }
+}
+
+# module.network-lb.aws_lb_target_group_attachment.k8s-lb-tg[0]:
+resource "aws_lb_target_group_attachment" "k8s-lb-tg" {
+    [1m[0mid[0m[0m               = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a-20220107191620570200000003"
+    [1m[0mport[0m[0m             = 6443
+    [1m[0mtarget_group_arn[0m[0m = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a"
+    [1m[0mtarget_id[0m[0m        = "172.31.0.10"
+}
+
+# module.network-lb.aws_lb_target_group_attachment.k8s-lb-tg[1]:
+resource "aws_lb_target_group_attachment" "k8s-lb-tg" {
+    [1m[0mid[0m[0m               = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a-20220107191620517400000001"
+    [1m[0mport[0m[0m             = 6443
+    [1m[0mtarget_group_arn[0m[0m = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a"
+    [1m[0mtarget_id[0m[0m        = "172.31.0.11"
+}
+
+# module.network-lb.aws_lb_target_group_attachment.k8s-lb-tg[2]:
+resource "aws_lb_target_group_attachment" "k8s-lb-tg" {
+    [1m[0mid[0m[0m               = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a-20220107191620529300000002"
+    [1m[0mport[0m[0m             = 6443
+    [1m[0mtarget_group_arn[0m[0m = "arn:aws:elasticloadbalancing:us-west-2:305311085423:targetgroup/k8s-tg/a4d025b90c33721a"
+    [1m[0mtarget_id[0m[0m        = "172.31.0.12"
+}
+
+
+# module.pod-network-route.aws_route_table.k8s-pod-worker-0-rtb:
+resource "aws_route_table" "k8s-pod-worker-0-rtb" {
+    [1m[0marn[0m[0m              = "arn:aws:ec2:us-west-2:305311085423:route-table/rtb-04544da1f9f17bef8"
+    [1m[0mid[0m[0m               = "rtb-04544da1f9f17bef8"
+    [1m[0mowner_id[0m[0m         = "305311085423"
+    [1m[0mpropagating_vgws[0m[0m = []
+    [1m[0mroute[0m[0m            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "172.20.0.0/24"
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = ""
+            instance_id                = "i-00f1f61d6fcf90637"
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+    ]
+    [1m[0mtags_all[0m[0m         = {}
+    [1m[0mvpc_id[0m[0m           = "vpc-042ac33a278a43836"
+}
+
+# module.pod-network-route.aws_route_table.k8s-pod-worker-1-rtb:
+resource "aws_route_table" "k8s-pod-worker-1-rtb" {
+    [1m[0marn[0m[0m              = "arn:aws:ec2:us-west-2:305311085423:route-table/rtb-0bc20f428b8636044"
+    [1m[0mid[0m[0m               = "rtb-0bc20f428b8636044"
+    [1m[0mowner_id[0m[0m         = "305311085423"
+    [1m[0mpropagating_vgws[0m[0m = []
+    [1m[0mroute[0m[0m            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "172.20.1.0/24"
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = ""
+            instance_id                = "i-0b70bfa7bab01c4b2"
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+    ]
+    [1m[0mtags_all[0m[0m         = {}
+    [1m[0mvpc_id[0m[0m           = "vpc-042ac33a278a43836"
+}
+
+# module.pod-network-route.aws_route_table.k8s-pod-worker-2-rtb:
+resource "aws_route_table" "k8s-pod-worker-2-rtb" {
+    [1m[0marn[0m[0m              = "arn:aws:ec2:us-west-2:305311085423:route-table/rtb-0f19184740728377f"
+    [1m[0mid[0m[0m               = "rtb-0f19184740728377f"
+    [1m[0mowner_id[0m[0m         = "305311085423"
+    [1m[0mpropagating_vgws[0m[0m = []
+    [1m[0mroute[0m[0m            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "172.20.2.0/24"
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = ""
+            instance_id                = "i-07cc47c51e6e7d839"
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+    ]
+    [1m[0mtags_all[0m[0m         = {}
+    [1m[0mvpc_id[0m[0m           = "vpc-042ac33a278a43836"
+}[0m[0m

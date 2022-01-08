@@ -6,6 +6,7 @@ module "network" {
   region                         = var.region
   vpc_cidr                       = var.vpc_cidr
   subnet_cidr                    = var.subnet_cidr
+  service_cidr                   = var.service_cidr
   all_ips                        = var.all_ips
   enable_dns_support             = var.enable_dns_support
   enable_dns_hostnames           = var.enable_dns_hostnames
@@ -45,4 +46,17 @@ module "network-lb" {
   vpc_id = module.network.vpc_id
   subnet = module.network.subnets
   resource_tag = var.resource_tag
+}
+
+# the module creates pod network routes
+module "pod-network-route" {
+source = "./modules/pod-network-route"
+# route_table          = module.network.route_table
+route_table_id       = module.network.route_table_id
+worker-0_instance_id = module.worker-nodes.instance_id_0
+worker-1_instance_id = module.worker-nodes.instance_id_1
+worker-2_instance_id = module.worker-nodes.instance_id_2
+# count = 3
+# pod_cidr = format("172.20.%d.0/24", count.index)
+# instance_id = module.worker-nodes.instance_id
 }
