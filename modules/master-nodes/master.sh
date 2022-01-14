@@ -1,6 +1,3 @@
-<<EOF
 #!/bin/bash
-for i in 0 1 2; do
-"name=master-${i}"
-done
-EOF
+    hostnamectl set-hostname server-${count.index}
+    hostnamectl

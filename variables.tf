@@ -23,13 +23,14 @@ variable "instance_type" {}
 variable "ami" {}
 
 variable "pod_routes" {
-  default = ["172.20.0.0/24", "172.20.1.0/24", "172.20.2.0/24"]
+  default     = ["172.20.0.0/24", "172.20.1.0/24", "172.20.2.0/24"]
   description = "targeted pod ranges"
-  type = list
+  type        = list(any)
 }
 
 /////////
 # Not part of code
+
 # variable "master_ip_list" {
 #   description = "targeted ip addresses"
 #   type        = list(any)

@@ -24,7 +24,7 @@ module "keypair" {
 module "master-nodes" {
   source        = "./modules/master-nodes"
   region        = var.region
-  subnet        = module.network.subnets
+  subnet_id     = module.network.subnet_id
   instance_type = var.instance_type
   ami           = var.ami
   k8s-sg        = module.network.security-group
@@ -34,7 +34,7 @@ module "master-nodes" {
 module "worker-nodes" {
   source        = "./modules/worker-nodes"
   region        = var.region
-  subnet        = module.network.subnets
+  subnet_id     = module.network.subnet_id
   instance_type = var.instance_type
   ami           = var.ami
   k8s-sg        = module.network.security-group
@@ -42,21 +42,29 @@ module "worker-nodes" {
 
 # the module creates network load-balancer
 module "network-lb" {
-  source = "./modules/network-lb"
-  vpc_id = module.network.vpc_id
-  subnet = module.network.subnets
+  source       = "./modules/network-lb"
+  vpc_id       = module.network.vpc_id
+  subnet_id    = module.network.subnet_id
   resource_tag = var.resource_tag
 }
 
 # the module creates pod network routes
 module "pod-network-route" {
-source = "./modules/pod-network-route"
-# route_table          = module.network.route_table
-route_table_id       = module.network.route_table_id
-worker-0_instance_id = module.worker-nodes.instance_id_0
-worker-1_instance_id = module.worker-nodes.instance_id_1
-worker-2_instance_id = module.worker-nodes.instance_id_2
-# count = 3
-# pod_cidr = format("172.20.%d.0/24", count.index)
-# instance_id = module.worker-nodes.instance_id
+  source               = "./modules/pod-network-route"
+  route_table          = module.network.route_table
+  route_table_id       = module.network.route_table_id
+  worker-0_instance_id = module.worker-nodes.instance_id_0
+  worker-1_instance_id = module.worker-nodes.instance_id_1
+  worker-2_instance_id = module.worker-nodes.instance_id_2
+  
+
+  ////////////
+  # not part of code
+  # vpc_id               = module.network.vpc_id
+  # subnet_id            = module.network.subnet_id
+  # count        = length(var.pod_routes)
+  # pod_routes   = element(var.pod_routes, count.index)
+  # pod_routes = format("172.20.%d.0/24", count.index)
+  # instance_ids            = ""
+  # resource_tag         = var.resource_tag
 }
