@@ -7,6 +7,7 @@ Requires=containerd.service
 ExecStart=/usr/local/bin/kubelet \
   --config=/var/lib/kubelet/kubelet-config.yaml \
   --cluster-domain=cluster.local \
+  --cloud-provider=external
   --container-runtime=remote \
   --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock \
   --image-pull-progress-deadline=2m \
