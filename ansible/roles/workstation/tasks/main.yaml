@@ -43,5 +43,6 @@
 
     - name: Set context for remote access
       ansible.builtin.shell: ./kubeconfig-server.sh
+      debugger: always
       args:
         chdir: /tmp/ca-authority
