@@ -14,6 +14,7 @@
         - certificates.sh
         - kubeconfigs.sh
         - encryption-config.sh
+        - kubeconfig-server.sh
   
 
     - name: Generate certificates
@@ -39,3 +40,9 @@
         path: /tmp/ca-authority
         recurse: yes
         mode: '0777'
+
+    - name: Set context for remote access
+      ansible.builtin.shell: ./kubeconfig-server.sh
+      debugger: always
+      args:
+        chdir: /tmp/ca-authority

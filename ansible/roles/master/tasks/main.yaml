@@ -22,11 +22,11 @@
         - kube-controller-manager.kubeconfig
         - encryption-config.yaml
         - admin.kubeconfig
-
-      
+    
+    
     - name: Download etcd
-      become: yes
-      ansible.builtin.get_url:
+      become: true
+      get_url:
         url: https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz
         dest: /tmp/etcd-v3.4.15-linux-amd64.tar.gz
         timeout: 600
@@ -40,8 +40,8 @@
 
 
     - name: Locate etcd files to copy
-      find:
-        paths: "/tmp/etcd-v3.4.15-linux-amd64/"
+      ansible.builtin.find:
+        paths: /tmp/etcd-v3.4.15-linux-amd64/
         recurse: yes
         patterns: "etcd*"
       register: etcd_files_to_copy
@@ -91,7 +91,7 @@
       notify: Restart etcd service
 
     - name: Start etcd service
-      become: yes
+      become: true
       systemd: 
         name: etcd
         state: started
@@ -99,7 +99,7 @@
         daemon_reload: yes
 
     - name: Download official Kubernetes release binaries
-      become: yes
+      become: true
       get_url:
         url: "{{ item }}"
         dest: /tmp
@@ -124,8 +124,8 @@
 
     
     - name: Locate kube* files
-      find:
-        paths: "/usr/local/bin/"
+      ansible.builtin.find:
+        paths: /usr/local/bin/
         recurse: no
         patterns: "kube*"
       register: kube_components
@@ -157,7 +157,7 @@
       notify: Restart Controller services
 
     - name: Start Controller services
-      become: yes
+      become: true
       ansible.builtin.systemd: 
         name: "{{ item }}"
         state: started
@@ -169,6 +169,12 @@
         - kube-scheduler
 
   
+    - name: Add host file entries
+      template:
+        src: ./templates/etc.hosts.j2
+        dest: /etc/hosts
+
+
     - name: Remove swapfile from /etc/fstab to disable swap
       ansible.posix.mount:
         name: "{{ item }}"
@@ -190,3 +196,27 @@
 
     - name: get current namespaces
       ansible.builtin.command: kubectl get namespaces --kubeconfig /var/lib/kubernetes/admin.kubeconfig
+
+###########################################################################################################################
+    # - name: Copy pem keys for context authentication for server 
+    #   copy:
+    #     src: "/tmp/ca-authority/{{ item }}"
+    #     dest: "/home/ubuntu"
+    #     remote_src: no
+    #   loop:
+    #     - ca.pem
+    #     - admin-key.pem
+    #     - admin.pem
+
+    # - name: Copy to control plane directory
+    #   copy:
+    #     src: "./templates/kubeconfig-server.sh"
+    #     dest: "/home/ubuntu"
+    #     mode: +rwx
+    
+    # - name: Set context for remote access
+    #   ansible.builtin.shell: ./kubeconfig-server.sh
+    #   args:
+    #     chdir: /home/ubuntu
+
+        ###################################

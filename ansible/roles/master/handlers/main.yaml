@@ -18,3 +18,11 @@
     - kube-apiserver
     - kube-controller-manager
     - kube-scheduler
+
+# - name: Restart Nginx service
+#   become: yes
+#   systemd: 
+#     name: nginx
+#     state: restarted
+#     enabled: yes
+#     daemon_reload: yes

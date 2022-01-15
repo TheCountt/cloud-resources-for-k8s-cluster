@@ -22,7 +22,6 @@
         - {src: "/tmp/ca-authority/{{ instance }}.pem", dest: /var/lib/kubelet/}
         - {src: "/tmp/ca-authority/{{ instance }}.kubeconfig", dest: /var/lib/kubelet/kubeconfig}
         - {src: /tmp/ca-authority/kube-proxy.kubeconfig, dest: /var/lib/kube-proxy/kubeconfig}
-        - {src: /tmp/ca-authority/admin.kubeconfig, dest: /var/lib/kubernetes/}
         - {src: /tmp/ca-authority/ca.pem, dest: /var/lib/kubernetes/}
     
     
@@ -172,5 +171,12 @@
         - kubelet
         - kube-proxy
 
-    - name: Get nodes
-      ansible.builtin.command: kubectl get nodes --kubeconfig /var/lib/kubernetes/admin.kubeconfig -o wide
+
+#########################################################################3
+    # - name: Distribute admin kubeconfig files
+    #   copy:
+    #     src: "/tmp/ca-authority/admin.kubeconfig"
+    #     dest: "/var/lib/kubernetes/"
+    #     remote_src: no
+
+ 
