@@ -26,6 +26,9 @@ resource "aws_route" "k8s-pod-worker-2" {
 }
 
 
+///////////////////////////
+#  not part of code
+
 # resource "aws_route" "k8s-pod-worker" {
 #   # count                  = var.no_of_routes
 #   route_table_id         = var.route_table_id  

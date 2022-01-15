@@ -18,15 +18,9 @@ enable_classiclink_dns_support = "false"
 
 resource_tag = "k8s-cluster-from-ground-up"
 
-<<<<<<< HEAD
-master_ip_list = ["192.168.5.10", "192.168.5.11", "192.168.5.12"]
-
-worker_ip_list = ["192.168.5.20", "192.168.5.21", "192.168.5.22"]
-=======
 ami = "ami-0477c9562acb01819"
 
 instance_type = "t2.micro"
->>>>>>> testing
 
 
 
