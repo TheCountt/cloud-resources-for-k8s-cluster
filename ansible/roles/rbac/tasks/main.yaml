@@ -8,15 +8,23 @@
 - name: Checking reachability
   ansible.builtin.command: curl --cacert /var/lib/kubernetes/ca.pem https://{{internal_ip}}:6443/version
 
-- name: Copy binding.sh to master-0
+- name: Copy template files to master-0
   template:
-    src: "./binding.sh"
-    dest: "/home/ubuntu"
+    src: "./templates/{{ item.src }}"
+    dest: "{{item.dest }}"
     owner: ubuntu
     group: ubuntu
     mode: '0777'
+  loop:
+    - {src: binding.sh, dest: /home/ubuntu}
+    - {src: ccm.sh, dest: /home/ubuntu}
 
-- name: Create and bind cluster roles
+- name: Create and bind cluster roles(binding.sh)
   ansible.builtin.shell: ./binding.sh
   args:
     chdir: /home/ubuntu
+
+- name: Create cluster roles(ccm.sh)
+  ansible.builtin.shell: ./ccm.sh
+  args:
+    chdir: /home/ubuntu    

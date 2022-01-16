@@ -125,7 +125,7 @@ resource "aws_security_group" "k8s-sg" {
   ingress {
     description = "open port 10250"
     from_port   = 10250
-    to_port     = 10250
+    to_port     = 10259
     protocol    = "tcp"
     cidr_blocks = [var.all_ips]
   }

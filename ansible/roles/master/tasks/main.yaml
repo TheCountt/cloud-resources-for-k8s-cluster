@@ -203,27 +203,3 @@
 
     - name: get current namespaces
       ansible.builtin.command: kubectl get namespaces --kubeconfig /var/lib/kubernetes/admin.kubeconfig
-
-###########################################################################################################################
-    # - name: Copy pem keys for context authentication for server 
-    #   copy:
-    #     src: "/tmp/ca-authority/{{ item }}"
-    #     dest: "/home/ubuntu"
-    #     remote_src: no
-    #   loop:
-    #     - ca.pem
-    #     - admin-key.pem
-    #     - admin.pem
-
-    # - name: Copy to control plane directory
-    #   copy:
-    #     src: "./templates/kubeconfig-server.sh"
-    #     dest: "/home/ubuntu"
-    #     mode: +rwx
-    
-    # - name: Set context for remote access
-    #   ansible.builtin.shell: ./kubeconfig-server.sh
-    #   args:
-    #     chdir: /home/ubuntu
-
-        ###################################
