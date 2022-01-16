@@ -1,0 +1,11 @@
+[Unit]
+Description=https://github.com/kubernetes/kubernetes
+
+[Service]
+ExecStart=/usr/local/bin/cloud-controller-manager \
+  --config=/etc/kubernetes/config/cloud-controller-manager.yaml
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
