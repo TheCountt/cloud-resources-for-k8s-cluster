@@ -145,7 +145,7 @@
         follow: yes
 
     
-    - name: Copy kube* templates
+    - name: Copy kube* (and ccm) templates
       template:
         src: "./templates/{{ item.src }}.j2"
         dest: "{{ item.dest }}"
@@ -154,6 +154,11 @@
         - {src: kube-controller-manager.service, dest: /etc/systemd/system/kube-controller-manager.service}
         - {src: kube-apiserver.service, dest: /etc/systemd/system/kube-apiserver.service}
         - {src: kube-scheduler.service, dest: /etc/systemd/system/kube-scheduler.service}
+        
+        # Trying out cloud-controller-manager
+        
+        - {src: cloud-controller-manager.yaml, dest: /etc/kubernetes/config/cloud-controller-manager.yaml}
+        - {src: cloud-controller-manager.service, dest: /etc/systemd/system/cloud-controller-manager.service}
       notify: Restart Controller services
 
     - name: Start Controller services
@@ -167,6 +172,8 @@
         - kube-apiserver
         - kube-controller-manager
         - kube-scheduler
+        # Trying out cloud-controller-manager
+        - cloud-controller-manager
 
   
     - name: Add host file entries
