@@ -3,7 +3,19 @@ Description=https://github.com/kubernetes/kubernetes
 
 [Service]
 ExecStart=/usr/local/bin/cloud-controller-manager \
-  --config=/etc/kubernetes/config/cloud-controller-manager.yaml
+  --cloud-config=/etc/kubernetes/config/cloud-controller-manager.yaml \
+  --cluster-cidr={{vpc_cidr}} \
+  --cluster-name={{name_cluster}} \
+  --controllers=* \
+  --allocate-node-cidrs=true \
+  --configure-cloud-routes=true \
+  --bind-address=0.0.0.0 \
+  --cloud-provider=aws \
+  --use-service-account-credentials=true \
+  --enable-leader-migration=true
+  --leader-elect-resource-namespace=aws-cloud-controller-manager \
+  --v=2 \
+  --service-cluster-ip-range=172.32.0.0/24
 Restart=on-failure
 RestartSec=5
 
