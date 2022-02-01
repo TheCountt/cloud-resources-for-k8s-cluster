@@ -739,7 +739,7 @@ EOF
     ${NAME}-worker-${i}-csr.json | cfssljson -bare ${NAME}-worker-${i}
 done
 ```
-- Finally, kubernetes admin user's Client Certificate and Private Key
+- Finally, Kubernetes admin user's Client Certificate and Private Key
 ```
 {
 cat > admin-csr.json <<EOF
