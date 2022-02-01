@@ -20,7 +20,7 @@ resource_tag = "k8s-cluster-from-ground-up"
 
 ami = "ami-0477c9562acb01819"
 
-instance_type = "t2.micro"
+instance_type = "t3.medium"
 
 
 

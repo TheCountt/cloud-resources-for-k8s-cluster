@@ -7,7 +7,13 @@ resource "aws_instance" "k8s-master" {
   private_ip                  = element(var.master_ip_list, count.index)
   vpc_security_group_ids      = [var.k8s-sg]
   associate_public_ip_address = true
-  user_data                   = "name=master-${count.index}"
+  user_data                   = <<-EOT
+  #!/bin/bash
+  hostname "ip-172-31-0-1${count.index}.us-west-2.compute.internal"
+  echo "ip-172-31-0-1${count.index}.us-west-2.compute.internal" > /etc/hostname
+  hostnamectl
+  EOT
+
   key_name                    = "k8s-cluster-from-ground-up"
 
   root_block_device {
