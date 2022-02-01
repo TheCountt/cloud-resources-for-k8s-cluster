@@ -26,7 +26,7 @@
     
     
     - name: Install required dependencies
-      become: yes
+      become: true
       apt:
         name:
           - socat
@@ -160,7 +160,7 @@
 
 
     - name: Start Kube* services
-      become: yes
+      become: true
       systemd: 
         name: "{{ item }}"
         state: started
