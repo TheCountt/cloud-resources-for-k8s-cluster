@@ -28,6 +28,7 @@ override.tf.json
 # example: *tfplan*
 .terraform*
 ssh
+tooling
 
 # 
 get-pip.py
